@@ -5,9 +5,10 @@ class Story
     public static var begin = [
         screen().at(Office).with(MarkBashful).saying("This is a test!"),
         screen().with(MarkHappy).saying("Previous settings are rolled into following screens"),
-        screen().choice("Welcome to Mark's mind. Do you accept the charges?",
+        screen(),
+        screen().with(MarkMigraine).choice("Welcome to Mark's mind. Do you accept the charges?",
         "Yes", [
-            screen().with(MarkMigraine).saying("Finally, it's over!"),
+            screen().with(MarkHappy).saying("Finally, it's over!"),
             screen().saying("Thanks for playing"),
         ],
         "Nope", [

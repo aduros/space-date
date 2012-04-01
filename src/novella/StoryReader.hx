@@ -1,11 +1,15 @@
 package novella;
 
 import flambe.Component;
+import flambe.display.FillSprite;
 import flambe.display.ImageSprite;
 import flambe.display.Sprite;
+import flambe.display.TextSprite;
 import flambe.Disposer;
 import flambe.Entity;
 import flambe.System;
+
+import novella.Screen;
 
 class StoryReader extends Component
 {
@@ -13,7 +17,6 @@ class StoryReader extends Component
     {
         _ctx = ctx;
         _screens = screens;
-        _screenIdx = 0;
     }
 
     override public function onAdded ()
@@ -24,43 +27,95 @@ class StoryReader extends Component
             owner.add(disposer);
         }
 
-        _backdropEntity = new Entity();
-        disposer.add(_backdropEntity);
+        disposer.add(_backdropEntity = new Entity());
         owner.addChild(_backdropEntity);
 
-        _actorEntity = new Entity();
-        disposer.add(_actorEntity);
+        disposer.add(_actorEntity = new Entity());
         owner.addChild(_actorEntity);
 
+        disposer.add(_modeLayer = new Entity());
+        owner.addChild(_modeLayer);
+
+        _screenIdx = 0;
+        _current = new Screen();
+
         disposer.connect1(System.pointer.down, function (_) {
-            ++_screenIdx;
-            createScreen();
+            switch (_current.mode) {
+            case Blank, Speech(_):
+                ++_screenIdx;
+                trace("Next screen");
+                createScreen();
+            default:
+                // Do nothing
+            }
         });
         createScreen();
     }
 
     private function createScreen ()
     {
-        var screen = _screens[_screenIdx];
+        var next = _screens[_screenIdx];
 
-        if (screen.backdrop != null) {
-            _backdropEntity.add(createBackdrop(screen.backdrop));
-        }
-        if (screen.actor != null) {
-            _actorEntity.add(createActor(screen.actor));
+        if (next.backdrop != null && next.backdrop != _current.backdrop) {
+            _backdropEntity.add(createBackdrop(next.backdrop));
+            _current.backdrop = next.backdrop;
         }
 
-        switch (screen.mode) {
+        if (next.actor != null && next.actor != _current.actor) {
+            var sprite = createActor(next.actor);
+            sprite.setXY(50, System.stage.height - sprite.getNaturalHeight());
+            _actorEntity.add(sprite);
+            _current.actor = next.actor;
+        }
+
+        _modeLayer.disposeChildren();
+
+        switch (next.mode) {
+        case Blank:
+            // Nothing
+
         case Speech(text):
-            trace(screen.actor + " says, \"" + text + "\"");
-        case Choice(heading, textA, outcomeA, textB, outcomeB):
-            trace("Choice: " + heading);
-            trace("--> " + textA);
-            trace("    " + textB);
-            _screens = outcomeA;
-            _screenIdx = 0;
-            createScreen();
+            var box = new Entity()
+                .add(new FillSprite(0x000000, System.stage.width, 100));
+            var sprite = box.get(Sprite);
+            sprite.y._ = System.stage.height - sprite.getNaturalHeight();
+            sprite.alpha._ = 0.8;
+            _modeLayer.addChild(box);
+
+            var label = new TextSprite(_ctx.mainFont,
+                _current.actor + " says, \"" + text + "\"");
+            box.addChild(new Entity().add(label));
+
+        case Choice(heading, options):
+            var box = new Entity()
+                .add(new FillSprite(0x000000, System.stage.width, 50));
+            var sprite = box.get(Sprite);
+            sprite.alpha._ = 0.8;
+            _modeLayer.addChild(box);
+
+            var label = new TextSprite(_ctx.mainFont, heading);
+            box.addChild(new Entity().add(label));
+
+            var y = 60.0;
+            for (option in options) {
+                var box = new Entity()
+                    .add(new FillSprite(0x000000, System.stage.width - 40, 50));
+                var sprite = box.get(Sprite);
+                sprite.alpha._ = 0.8;
+                sprite.setXY(20, y);
+                sprite.pointerDown.connect(function (_) {
+                    _screens = option.branch;
+                    _screenIdx = 0;
+                    createScreen();
+                });
+                y += sprite.getNaturalHeight() + 10;
+                _modeLayer.addChild(box);
+
+                var label = new TextSprite(_ctx.mainFont, option.text);
+                box.addChild(new Entity().add(label));
+            }
         }
+        _current.mode = next.mode;
     }
 
     private function createActor (actor :Actor) :Sprite
@@ -77,6 +132,8 @@ class StoryReader extends Component
 
     private var _ctx :NovellaCtx;
 
+    private var _current :Screen;
+
     // All the screens in the story
     private var _screens :Array<Screen>;
 
@@ -85,4 +142,5 @@ class StoryReader extends Component
 
     private var _actorEntity :Entity;
     private var _backdropEntity :Entity;
+    private var _modeLayer :Entity;
 }

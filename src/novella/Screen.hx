@@ -6,7 +6,10 @@ class Screen
     public var backdrop :Backdrop;
     public var mode :ScreenMode;
 
-    public function new () { }
+    public function new ()
+    {
+        mode = Blank;
+    }
 
     public function at (backdrop :Backdrop)
     {
@@ -26,17 +29,34 @@ class Screen
         return this;
     }
 
-    public function choice (text :String,
-        textA :String, outcomeA :Array<Screen>, textB :String, outcomeB :Array<Screen>)
+    public function choice (heading :String,
+        textA :String, branchA :Array<Screen>, textB :String, branchB :Array<Screen>)
     {
-        this.mode = Choice(text, textA, outcomeA, textB, outcomeB);
+        this.mode = Choice(heading, [new Option(textA, branchA), new Option(textB, branchB)]);
         return this;
     }
 }
 
 enum ScreenMode
 {
+    // Don't show any UI
+    Blank;
+
+    // Show the actor saying something
     Speech (text :String);
-    Choice (heading :String,
-        textA :String, outcomeA :Array<Screen>, textB :String, outcomeB :Array<Screen>);
+
+    // Show a branch in the story
+    Choice (heading :String, choices :Array<Option>);
+}
+
+class Option
+{
+    public var text :String;
+    public var branch :Array<Screen>;
+
+    public function new (text :String, branch :Array<Screen>)
+    {
+        this.text = text;
+        this.branch = branch;
+    }
 }
