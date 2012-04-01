@@ -27,6 +27,10 @@ class NovellaMain
             .add(new FillSprite(0x202020, System.stage.width, System.stage.height));
         System.root.addChild(background);
 
-        var begin = Story.begin;
+        var ctx = new NovellaCtx();
+        ctx.pack = pack;
+
+        var reader = new StoryReader(ctx, Story.begin);
+        System.root.addChild(new Entity().add(reader));
     }
 }
