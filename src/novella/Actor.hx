@@ -3,6 +3,9 @@ package novella;
 enum Actor
 {
     Narrator;
-    MarkHappy;
+
+    Mark;
     MarkBashful;
+    MarkHappy;
+    MarkMigraine;
 }
