@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Build a fresh release build
+rm -rf deploy
+waf configure install
+
+# If the build was sucessful
+if [ $? -eq 0 ]; then
+    # Deploy it
+    rsync -avz --delete deploy/default/web/ catdap:web/novella
+
+    # Restore debug for development
+    waf configure --debug
+fi
