@@ -43,7 +43,6 @@ class StoryReader extends Component
             switch (_current.mode) {
             case Blank, Speech(_):
                 ++_screenIdx;
-                trace("Next screen");
                 createScreen();
             default:
                 // Do nothing
@@ -82,9 +81,16 @@ class StoryReader extends Component
             sprite.alpha._ = 0.8;
             _modeLayer.addChild(box);
 
-            var label = new TextSprite(_ctx.mainFont,
-                _current.actor + " says, \"" + text + "\"");
-            box.addChild(new Entity().add(label));
+            var y = 0;
+            var width = System.stage.width;
+            var lines = _ctx.mainFont.formatLines(
+                _current.actor + " says, \"" + text + "\"", System.stage.width);
+            for (line in lines) {
+                var label = new TextSprite(_ctx.mainFont, line);
+                label.y._ = y;
+                y += label.font.size;
+                box.addChild(new Entity().add(label));
+            }
 
         case Choice(heading, options):
             var box = new Entity()

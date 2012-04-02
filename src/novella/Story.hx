@@ -4,7 +4,8 @@ class Story
 {
     public static var begin = [
         screen().at(Office).with(MarkBashful).saying("This is a test!"),
-        screen().with(MarkHappy).saying("Previous settings are rolled into following screens"),
+        screen().with(MarkHappy).saying("This text is very, very long and should automatically"
+            + " wrap into multiple lines. Cuz it's long."),
         screen(),
         screen().with(MarkMigraine).choice("Welcome to Mark's mind. Do you accept the charges?",
         "Yes", [
