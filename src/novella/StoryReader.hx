@@ -7,6 +7,8 @@ import flambe.display.Sprite;
 import flambe.display.TextSprite;
 import flambe.Disposer;
 import flambe.Entity;
+import flambe.script.Script;
+import flambe.script.Sequence;
 import flambe.System;
 
 import novella.Screen;
@@ -83,14 +85,19 @@ class StoryReader extends Component
 
             var y = 0;
             var width = System.stage.width;
-            var lines = _ctx.mainFont.formatLines(
+            var lines = _ctx.mainFont.splitLines(
                 _current.actor + " says, \"" + text + "\"", System.stage.width);
+            var seq = [];
             for (line in lines) {
-                var label = new TextSprite(_ctx.mainFont, line);
+                var label = new TextSprite(_ctx.mainFont);
                 label.y._ = y;
                 y += label.font.size;
+                seq.push(new TypeAction(line, 15, label));
                 box.addChild(new Entity().add(label));
             }
+            var script = new Script();
+            script.run(new Sequence(seq));
+            box.add(script);
 
         case Choice(heading, options):
             var box = new Entity()
