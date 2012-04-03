@@ -83,13 +83,16 @@ class StoryReader extends Component
             sprite.alpha._ = 0.8;
             _modeLayer.addChild(box);
 
+            var name = getActorName(_current.actor);
+            box.addChild(new Entity()
+                .add(new TextSprite(_ctx.georgia24, name).setXY(5, -20)));
+
             var y = 0;
             var width = System.stage.width;
-            var lines = _ctx.mainFont.splitLines(
-                _current.actor + " says, \"" + text + "\"", System.stage.width);
+            var lines = _ctx.georgia32.splitLines(text, System.stage.width);
             var seq = [];
             for (line in lines) {
-                var label = new TextSprite(_ctx.mainFont);
+                var label = new TextSprite(_ctx.georgia32);
                 label.y._ = y;
                 y += label.font.size;
                 seq.push(new TypeAction(line, 15, label));
@@ -106,7 +109,7 @@ class StoryReader extends Component
             sprite.alpha._ = 0.8;
             _modeLayer.addChild(box);
 
-            var label = new TextSprite(_ctx.mainFont, heading);
+            var label = new TextSprite(_ctx.georgia32, heading);
             box.addChild(new Entity().add(label));
 
             var y = 60.0;
@@ -124,7 +127,7 @@ class StoryReader extends Component
                 y += sprite.getNaturalHeight() + 10;
                 _modeLayer.addChild(box);
 
-                var label = new TextSprite(_ctx.mainFont, option.text);
+                var label = new TextSprite(_ctx.georgia32, option.text);
                 box.addChild(new Entity().add(label));
             }
         }
@@ -133,14 +136,27 @@ class StoryReader extends Component
 
     private function createActor (actor :Actor) :Sprite
     {
-        var name = Type.enumConstructor(actor);
-        return new ImageSprite(_ctx.pack.loadTexture("actors/" + name + ".png"));
+        switch (actor) {
+        case Nobody:
+            return new Sprite();
+        default:
+            var name = Type.enumConstructor(actor);
+            return new ImageSprite(_ctx.pack.loadTexture("actors/" + name + ".png"));
+        }
     }
 
     private function createBackdrop (backdrop :Backdrop) :Sprite
     {
         var name = Type.enumConstructor(backdrop);
         return new ImageSprite(_ctx.pack.loadTexture("backdrops/" + name + ".jpg"));
+    }
+
+    private function getActorName (actor :Actor) :String
+    {
+        return switch (actor) {
+            case Mark, MarkHappy, MarkBashful, MarkMigraine: "Mark";
+            case Nobody: "";
+        }
     }
 
     private var _ctx :NovellaCtx;

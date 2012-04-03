@@ -2,7 +2,7 @@ package novella;
 
 enum Actor
 {
-    Narrator;
+    Nobody;
 
     Mark;
     MarkBashful;
