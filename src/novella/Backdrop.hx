@@ -4,4 +4,5 @@ enum Backdrop
 {
     Office;
     PlaceKitten;
+    Printer;
 }

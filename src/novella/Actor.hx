@@ -8,4 +8,10 @@ enum Actor
     MarkBashful;
     MarkHappy;
     MarkMigraine;
+
+    Sarah;
+    SarahAngry;
+    SarahBashful;
+    SarahHappy;
+    SarahSad;
 }

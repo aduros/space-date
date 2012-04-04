@@ -178,6 +178,7 @@ class StoryReader extends Component
     {
         return switch (actor) {
             case Mark, MarkHappy, MarkBashful, MarkMigraine: "Mark";
+            case Sarah, SarahHappy, SarahBashful, SarahSad, SarahAngry: "Sarah";
             case Nobody: "";
         }
     }
