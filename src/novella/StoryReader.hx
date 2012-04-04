@@ -17,10 +17,10 @@ import novella.Screen;
 
 class StoryReader extends Component
 {
-    public function new (ctx :NovellaCtx, screens :Array<Screen>)
+    public function new (ctx :NovellaCtx, story :Screen)
     {
         _ctx = ctx;
-        _screens = screens;
+        _cursor = story.rewind();
     }
 
     override public function onAdded ()
@@ -40,42 +40,42 @@ class StoryReader extends Component
         disposer.add(_modeLayer = new Entity());
         owner.addChild(_modeLayer);
 
-        _screenIdx = 0;
-        _current = new Screen();
+        _aggregator = new Screen();
 
         disposer.connect1(System.pointer.down, function (_) {
-            switch (_current.mode) {
+            switch (_aggregator.mode) {
             case Blank, Speech(_):
-                ++_screenIdx;
-                createScreen();
+                if (_cursor.nextScreen != null) {
+                    show(_cursor.nextScreen);
+                } else {
+                    trace("GAME OVER!");
+                }
             default:
                 // Do nothing
             }
         });
-        createScreen();
+        show(_cursor);
     }
 
-    private function createScreen ()
+    private function show (screen :Screen)
     {
-        var next = _screens[_screenIdx];
-
-        if (next.backdrop != null && next.backdrop != _current.backdrop) {
-            _backdropEntity.add(createBackdrop(next.backdrop));
-            _current.backdrop = next.backdrop;
+        if (screen.backdrop != null && screen.backdrop != _aggregator.backdrop) {
+            _backdropEntity.add(createBackdrop(screen.backdrop));
+            _aggregator.backdrop = screen.backdrop;
         }
 
-        if (next.actor != null && next.actor != _current.actor) {
-            var sprite = createActor(next.actor);
+        if (screen.actor != null && screen.actor != _aggregator.actor) {
+            var sprite = createActor(screen.actor);
             sprite.setXY(50, System.stage.height - sprite.getNaturalHeight());
             _actorEntity.add(sprite);
-            _current.actor = next.actor;
+            _aggregator.actor = screen.actor;
         }
 
-        if (next.music != null && next.music != _current.music) {
+        if (screen.music != null && screen.music != _aggregator.music) {
             if (_music != null) {
                 _music.dispose();
             }
-            var sound = createMusic(next.music);
+            var sound = createMusic(screen.music);
             if (sound != null) {
                 _music = sound.loop();
             }
@@ -83,7 +83,7 @@ class StoryReader extends Component
 
         _modeLayer.disposeChildren();
 
-        switch (next.mode) {
+        switch (screen.mode) {
         case Blank:
             // Nothing
 
@@ -95,7 +95,7 @@ class StoryReader extends Component
             sprite.alpha._ = 0.8;
             _modeLayer.addChild(box);
 
-            var name = getActorName(_current.actor);
+            var name = getActorName(_aggregator.actor);
             box.addChild(new Entity()
                 .add(new TextSprite(_ctx.georgia24, name).setXY(5, -20)));
 
@@ -132,9 +132,7 @@ class StoryReader extends Component
                 sprite.alpha._ = 0.8;
                 sprite.setXY(20, y);
                 sprite.pointerDown.connect(function (_) {
-                    _screens = option.branch;
-                    _screenIdx = 0;
-                    createScreen();
+                    show(option.branch);
                 });
                 y += sprite.getNaturalHeight() + 10;
                 _modeLayer.addChild(box);
@@ -143,7 +141,9 @@ class StoryReader extends Component
                 box.addChild(new Entity().add(label));
             }
         }
-        _current.mode = next.mode;
+        _aggregator.mode = screen.mode;
+
+        _cursor = screen;
     }
 
     private function createActor (actor :Actor) :Sprite
@@ -184,13 +184,8 @@ class StoryReader extends Component
 
     private var _ctx :NovellaCtx;
 
-    private var _current :Screen;
-
-    // All the screens in the story
-    private var _screens :Array<Screen>;
-
-    // The current position into the story we're in
-    private var _screenIdx :Int;
+    private var _cursor :Screen;
+    private var _aggregator :Screen;
 
     private var _music :Playback;
 

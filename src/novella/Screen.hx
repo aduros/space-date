@@ -7,6 +7,9 @@ class Screen
     public var music :Music;
     public var mode :ScreenMode;
 
+    public var prevScreen :Screen;
+    public var nextScreen :Screen;
+
     public function new ()
     {
         mode = Blank;
@@ -36,8 +39,24 @@ class Screen
         return this;
     }
 
+    public function then ()
+    {
+        nextScreen = new Screen();
+        nextScreen.prevScreen = this;
+        return nextScreen;
+    }
+
+    public function rewind ()
+    {
+        var screen = this;
+        while (screen.prevScreen != null) {
+            screen = screen.prevScreen;
+        }
+        return screen;
+    }
+
     public function choice (heading :String,
-        textA :String, branchA :Array<Screen>, textB :String, branchB :Array<Screen>)
+        textA :String, branchA :Screen, textB :String, branchB :Screen)
     {
         this.mode = Choice(heading, [new Option(textA, branchA), new Option(textB, branchB)]);
         return this;
@@ -59,11 +78,11 @@ enum ScreenMode
 class Option
 {
     public var text :String;
-    public var branch :Array<Screen>;
+    public var branch :Screen;
 
-    public function new (text :String, branch :Array<Screen>)
+    public function new (text :String, branch :Screen)
     {
         this.text = text;
-        this.branch = branch;
+        this.branch = branch.rewind();
     }
 }
