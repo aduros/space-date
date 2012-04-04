@@ -4,6 +4,7 @@ class Screen
 {
     public var actor :Actor;
     public var backdrop :Backdrop;
+    public var music :Music;
     public var mode :ScreenMode;
 
     public function new ()
@@ -26,6 +27,12 @@ class Screen
     public function saying (text :String)
     {
         this.mode = Speech(text);
+        return this;
+    }
+
+    public function playing (music :Music)
+    {
+        this.music = music;
         return this;
     }
 

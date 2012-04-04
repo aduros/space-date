@@ -9,6 +9,8 @@ import flambe.Disposer;
 import flambe.Entity;
 import flambe.script.Script;
 import flambe.script.Sequence;
+import flambe.sound.Playback;
+import flambe.sound.Sound;
 import flambe.System;
 
 import novella.Screen;
@@ -67,6 +69,16 @@ class StoryReader extends Component
             sprite.setXY(50, System.stage.height - sprite.getNaturalHeight());
             _actorEntity.add(sprite);
             _current.actor = next.actor;
+        }
+
+        if (next.music != null && next.music != _current.music) {
+            if (_music != null) {
+                _music.dispose();
+            }
+            var sound = createMusic(next.music);
+            if (sound != null) {
+                _music = sound.loop();
+            }
         }
 
         _modeLayer.disposeChildren();
@@ -151,6 +163,17 @@ class StoryReader extends Component
         return new ImageSprite(_ctx.pack.loadTexture("backdrops/" + name + ".jpg"));
     }
 
+    private function createMusic (music :Music) :Sound
+    {
+        switch (music) {
+        case Silence:
+            return null;
+        default:
+            var name = Type.enumConstructor(music);
+            return _ctx.pack.loadSound("music/" + name);
+        }
+    }
+
     private function getActorName (actor :Actor) :String
     {
         return switch (actor) {
@@ -168,6 +191,8 @@ class StoryReader extends Component
 
     // The current position into the story we're in
     private var _screenIdx :Int;
+
+    private var _music :Playback;
 
     private var _actorEntity :Entity;
     private var _backdropEntity :Entity;

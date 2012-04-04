@@ -3,14 +3,14 @@ package novella;
 class Story
 {
     public static var begin = [
-        screen().at(Office).with(MarkBashful).saying("This is a test!"),
+        screen().at(Office).with(MarkBashful).saying("This is a test!").playing(Jazz),
         screen().with(MarkHappy).saying("This text is very, very long and should automatically"
             + " wrap into multiple lines. Cuz it's long. Now for a moment of silence."),
-        screen().with(Mark),
-        screen().with(MarkMigraine).saying("Whoa, I feel a dilemma coming up..."),
+        screen().with(Mark).playing(Silence),
+        screen().with(MarkMigraine).playing(Jazz).saying("Whoa, I feel a dilemma coming up..."),
         screen().choice("Let Mark go home early?",
         "Yes", [
-            screen().with(MarkHappy).saying("Finally, it's over!"),
+            screen().with(MarkHappy).saying("Finally, it's over!").playing(Chiptune),
             screen().saying("Thanks for playing"),
             screen().with(Nobody).saying("And so I left the office never to be seen again..."),
             screen(),
