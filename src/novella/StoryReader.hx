@@ -121,8 +121,8 @@ class StoryReader extends Component
             sprite.alpha._ = 0.8;
             _modeLayer.addChild(box);
 
-            var label = new TextSprite(_ctx.georgia32, heading);
-            box.addChild(new Entity().add(label));
+            var heading = new TextSprite(_ctx.georgia32, heading);
+            box.addChild(new Entity().add(heading));
 
             var y = 60.0;
             for (option in options) {
@@ -138,6 +138,8 @@ class StoryReader extends Component
                 _modeLayer.addChild(box);
 
                 var label = new TextSprite(_ctx.georgia32, option.text);
+                label.setXY(sprite.getNaturalWidth()/2 - label.getNaturalWidth()/2,
+                    sprite.getNaturalHeight()/2 - label.font.size/2);
                 box.addChild(new Entity().add(label));
             }
         }
