@@ -153,12 +153,23 @@ class StoryReader extends Component
             box.addChild(new Entity().add(heading));
 
             var y = 60.0;
+            var animFromLeft = true;
+            var animDuration = 0.5;
+
             for (option in options) {
                 var box = new Entity()
                     .add(new FillSprite(0x000000, System.stage.width - 40, 50));
                 var sprite = box.get(Sprite);
                 sprite.alpha._ = 0.8;
-                sprite.setXY(20, y);
+
+                if (animFromLeft) {
+                    sprite.x.animate(-sprite.getNaturalWidth(), 20, animDuration);
+                } else {
+                    sprite.x.animate(System.stage.width, 20, animDuration);
+                }
+                animFromLeft = !animFromLeft;
+
+                sprite.y._ = y;
                 sprite.pointerDown.connect(function (event) {
                     show(option.branch);
                     _ignoreEvent = event; // Flag that this event shouldn't be handled above
