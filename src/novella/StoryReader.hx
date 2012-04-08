@@ -7,6 +7,8 @@ import flambe.display.Sprite;
 import flambe.display.TextSprite;
 import flambe.Disposer;
 import flambe.Entity;
+import flambe.input.PointerEvent;
+import flambe.scene.Director;
 import flambe.script.Script;
 import flambe.script.Sequence;
 import flambe.sound.Playback;
@@ -21,40 +23,48 @@ class StoryReader extends Component
     {
         _ctx = ctx;
         _cursor = story.rewind();
+        _disposer = new Disposer();
     }
 
     override public function onAdded ()
     {
-        var disposer = owner.get(Disposer);
-        if (disposer == null) {
-            disposer = new Disposer();
-            owner.add(disposer);
-        }
-
-        disposer.add(_backdropEntity = new Entity());
+        _disposer.add(_backdropEntity = new Entity());
         owner.addChild(_backdropEntity);
 
-        disposer.add(_actorEntity = new Entity());
+        _disposer.add(_actorEntity = new Entity());
         owner.addChild(_actorEntity);
 
-        disposer.add(_modeLayer = new Entity());
+        _disposer.add(_modeLayer = new Entity());
         owner.addChild(_modeLayer);
 
         _aggregator = new Screen();
 
-        disposer.connect1(System.pointer.down, function (_) {
-            switch (_aggregator.mode) {
+        _disposer.connect1(System.pointer.down, function (event) {
+            if (event == _ignoreEvent) {
+                return;
+            }
+            _ignoreEvent = null;
+
+            switch (_cursor.mode) {
             case Blank, Speech(_):
                 if (_cursor.nextScreen != null) {
+                    // Show the next screen
                     show(_cursor.nextScreen);
                 } else {
-                    trace("GAME OVER!");
+                    // Story's over, go back to the main menu
+                    System.root.get(Director).unwindToScene(MainScene.create(_ctx));
                 }
             default:
                 // Do nothing
             }
         });
         show(_cursor);
+    }
+
+    override public function onRemoved ()
+    {
+        // Clean up all the listeners and entities assigned to our disposer
+        _disposer.dispose();
     }
 
     private function show (screen :Screen)
@@ -73,11 +83,16 @@ class StoryReader extends Component
 
         if (screen.music != null && screen.music != _aggregator.music) {
             if (_music != null) {
+                _disposer.remove(_music);
                 _music.dispose();
             }
+
+            // Play the new music, adding it to the _disposer so it will automatically stop when this
+            // entity is disposed
             var sound = createMusic(screen.music);
             if (sound != null) {
                 _music = sound.loop();
+                _disposer.add(_music);
             }
         }
 
@@ -131,8 +146,9 @@ class StoryReader extends Component
                 var sprite = box.get(Sprite);
                 sprite.alpha._ = 0.8;
                 sprite.setXY(20, y);
-                sprite.pointerDown.connect(function (_) {
+                sprite.pointerDown.connect(function (event) {
                     show(option.branch);
+                    _ignoreEvent = event; // Flag that this event shouldn't be handled above
                 });
                 y += sprite.getNaturalHeight() + 10;
                 _modeLayer.addChild(box);
@@ -186,6 +202,8 @@ class StoryReader extends Component
     }
 
     private var _ctx :NovellaCtx;
+    private var _disposer :Disposer;
+    private var _ignoreEvent :PointerEvent;
 
     private var _cursor :Screen;
     private var _aggregator :Screen;
