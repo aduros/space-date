@@ -75,9 +75,22 @@ class StoryReader extends Component
         }
 
         if (screen.actor != null && screen.actor != _aggregator.actor) {
-            var sprite = createActor(screen.actor);
-            sprite.setXY(50, System.stage.height - sprite.getNaturalHeight());
-            _actorEntity.add(sprite);
+            var fadeDuration = 0.2;
+            if (screen.actor == Actor.Nobody) {
+                // Simply fade out the current actor
+                _actorEntity.get(Sprite).alpha.animate(1, 0, fadeDuration);
+
+            } else {
+                // Swap in the new actor
+                var sprite = createActor(screen.actor);
+                sprite.setXY(50, System.stage.height - sprite.getNaturalHeight());
+                _actorEntity.add(sprite);
+
+                // And fade if there was nobody on screen previously
+                if (_aggregator.actor == Actor.Nobody) {
+                    sprite.alpha.animate(0, 1, fadeDuration);
+                }
+            }
             _aggregator.actor = screen.actor;
         }
 
