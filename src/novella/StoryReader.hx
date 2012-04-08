@@ -89,23 +89,23 @@ class StoryReader extends Component
 
         case Speech(text):
             var box = new Entity()
-                .add(new FillSprite(0x000000, System.stage.width, 100));
+                .add(new ImageSprite(_ctx.pack.loadTexture("wordbox.png")));
             var sprite = box.get(Sprite);
             sprite.y._ = System.stage.height - sprite.getNaturalHeight();
-            sprite.alpha._ = 0.8;
             _modeLayer.addChild(box);
 
             var name = getActorName(_aggregator.actor);
             box.addChild(new Entity()
                 .add(new TextSprite(_ctx.georgia24, name).setXY(5, -20)));
 
-            var y = 0;
+            var padding = 10;
+            var y = 20;
             var width = System.stage.width;
-            var lines = _ctx.georgia32.splitLines(text, System.stage.width);
+            var lines = _ctx.georgia32.splitLines(text, System.stage.width - 2*padding);
             var seq = [];
             for (line in lines) {
                 var label = new TextSprite(_ctx.georgia32);
-                label.y._ = y;
+                label.setXY(padding, y);
                 y += label.font.size;
                 seq.push(new TypeAction(line, 15, label));
                 box.addChild(new Entity().add(label));
