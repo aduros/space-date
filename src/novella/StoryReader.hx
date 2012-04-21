@@ -44,6 +44,7 @@ class StoryReader extends Component
                 return;
             }
             _ignoreEvent = null;
+            trace("Pointer event");
 
             switch (_cursor.mode) {
             case Blank, Speech(_):
@@ -73,10 +74,11 @@ class StoryReader extends Component
             _backdropEntity.add(createBackdrop(screen.backdrop));
             _aggregator.backdrop = screen.backdrop;
         }
+        trace("Showing screen: " + screen.mode);
 
         if (screen.actor != null && screen.actor != _aggregator.actor) {
             var fadeDuration = 0.2;
-            if (screen.actor == Actor.Nobody) {
+            if (screen.actor == Actor.Nobody && _actorEntity.has(Sprite)) {
                 // Simply fade out the current actor
                 _actorEntity.get(Sprite).alpha.animate(1, 0, fadeDuration);
 
@@ -219,9 +221,11 @@ class StoryReader extends Component
     private function getActorName (actor :Actor) :String
     {
         return switch (actor) {
+            case Dan, DanHappy: "Dan";
+            case Lori: "Lori";
             case Mark, MarkHappy, MarkBashful, MarkMigraine: "Mark";
-            case Sarah, SarahHappy, SarahBashful, SarahSad, SarahAngry: "Sarah";
             case Nobody: "";
+            case Sarah, SarahHappy, SarahBashful, SarahSad, SarahAngry: "Sarah";
         }
     }
 

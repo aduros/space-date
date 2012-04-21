@@ -14,4 +14,9 @@ enum Actor
     SarahBashful;
     SarahHappy;
     SarahSad;
+
+    Dan;
+    DanHappy;
+
+    Lori;
 }

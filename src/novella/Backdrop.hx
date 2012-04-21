@@ -2,9 +2,8 @@ package novella;
 
 enum Backdrop
 {
+    Blocks;
     Cafe;
     Office;
-    PlaceKitten;
     Printer;
-    Stress;
 }

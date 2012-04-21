@@ -8,7 +8,7 @@ class StoryScene
     {
         var scene = new Entity();
 
-        var reader = new StoryReader(ctx, Story.begin);
+        var reader = new StoryReader(ctx, Story.intro);
         scene.addChild(new Entity().add(reader));
 
         return scene;
