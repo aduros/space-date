@@ -36,6 +36,17 @@ class PreloaderScene
         });
         progressBar.addChild(barFill);
 
+        // Track the download time and if any errors happened during loading
+        var startTime = Date.now().getTime();
+        loader.get(function (_) {
+            var loadTime = Std.int(Date.now().getTime() - startTime);
+            trace("Loaded in " + loadTime + "ms");
+            Metrics.trackEvent("Preloader", "Finished", loadTime);
+        });
+        loader.error.connect(function (message :String) {
+            Metrics.trackError("Preloader", message);
+        });
+
         return scene;
     }
 
