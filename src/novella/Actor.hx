@@ -6,12 +6,19 @@ enum Actor
 
     Mark;
     MarkBashful;
+    MarkCasual;
+    MarkCasualBashful;
+    MarkCasualHappy;
+    MarkCasualMigraine;
     MarkHappy;
     MarkMigraine;
 
     Sarah;
     SarahAngry;
     SarahBashful;
+    SarahCasual;
+    SarahCasualBashful;
+    SarahCasualHappy;
     SarahHappy;
     SarahSad;
 

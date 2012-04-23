@@ -20,6 +20,8 @@ class MainScene
             System.root.get(Director).unwindToScene(StoryScene.create(ctx));
         });
 
+        trace("Unlocked endings: " + ctx.endings);
+
         return scene;
     }
 }

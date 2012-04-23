@@ -44,16 +44,12 @@ class StoryReader extends Component
                 return;
             }
             _ignoreEvent = null;
-            trace("Pointer event");
 
             switch (_cursor.mode) {
             case Blank, Speech(_):
                 if (_cursor.nextScreen != null) {
-                    // Show the next screen
+                    // Advance to the next screen
                     show(_cursor.nextScreen);
-                } else {
-                    // Story's over, go back to the main menu
-                    System.root.get(Director).unwindToScene(MainScene.create(_ctx));
                 }
             default:
                 // Do nothing
@@ -74,7 +70,6 @@ class StoryReader extends Component
             _backdropEntity.add(createBackdrop(screen.backdrop));
             _aggregator.backdrop = screen.backdrop;
         }
-        trace("Showing screen: " + screen.mode);
 
         if (screen.actor != null && screen.actor != _aggregator.actor) {
             var fadeDuration = 0.2;
@@ -184,6 +179,10 @@ class StoryReader extends Component
                     sprite.getNaturalHeight()/2 - label.font.size/2);
                 box.addChild(new Entity().add(label));
             }
+
+        case Ending(ending):
+            _ctx.unlockEnding(ending);
+            System.root.get(Director).unwindToScene(MainScene.create(_ctx));
         }
         _aggregator.mode = screen.mode;
 
@@ -223,9 +222,11 @@ class StoryReader extends Component
         return switch (actor) {
             case Dan, DanHappy: "Dan";
             case Lori: "Lori";
-            case Mark, MarkHappy, MarkBashful, MarkMigraine: "Mark";
+            case Mark, MarkHappy, MarkBashful, MarkMigraine,
+                MarkCasual, MarkCasualHappy, MarkCasualBashful, MarkCasualMigraine: "Mark";
             case Nobody: "";
-            case Sarah, SarahHappy, SarahBashful, SarahSad, SarahAngry: "Sarah";
+            case Sarah, SarahHappy, SarahBashful, SarahSad, SarahAngry,
+                SarahCasual, SarahCasualHappy, SarahCasualBashful: "Sarah";
         }
     }
 

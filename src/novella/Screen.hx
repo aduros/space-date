@@ -61,6 +61,12 @@ class Screen
         this.mode = Choice(heading, [new Option(textA, branchA), new Option(textB, branchB)]);
         return this;
     }
+
+    public function theEnd (ending :Int)
+    {
+        this.mode = Ending(ending);
+        return this;
+    }
 }
 
 enum ScreenMode
@@ -73,6 +79,9 @@ enum ScreenMode
 
     // Show a branch in the story
     Choice (heading :String, choices :Array<Option>);
+
+    // Reach an ending
+    Ending (ending :Int);
 }
 
 class Option
