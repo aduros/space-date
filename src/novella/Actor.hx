@@ -17,8 +17,10 @@ enum Actor
     SarahAngry;
     SarahBashful;
     SarahCasual;
+    SarahCasualAngry;
     SarahCasualBashful;
     SarahCasualHappy;
+    SarahCasualSad;
     SarahHappy;
     SarahSad;
 

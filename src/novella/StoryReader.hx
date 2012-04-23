@@ -226,7 +226,8 @@ class StoryReader extends Component
                 MarkCasual, MarkCasualHappy, MarkCasualBashful, MarkCasualMigraine: "Mark";
             case Nobody: "";
             case Sarah, SarahHappy, SarahBashful, SarahSad, SarahAngry,
-                SarahCasual, SarahCasualHappy, SarahCasualBashful: "Sarah";
+                SarahCasual, SarahCasualHappy, SarahCasualBashful, SarahCasualSad,
+                SarahCasualAngry: "Sarah";
         }
     }
 
