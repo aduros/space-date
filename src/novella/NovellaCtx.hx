@@ -16,16 +16,16 @@ class NovellaCtx
 {
     public var pack (default, null) :AssetPack;
 
-    public var georgia24 (default, null) :Font;
-    public var georgia32 (default, null) :Font;
+    public var fontFixed (default, null) :Font;
+    public var fontMangal (default, null) :Font;
 
     public var endings (default, null) :Array<Int>;
 
     public function new (pack :AssetPack)
     {
         this.pack = pack;
-        georgia24 = new Font(pack, "georgia24");
-        georgia32 = new Font(pack, "georgia32");
+        fontFixed = new Font(pack, "fonts/fixedsys");
+        fontMangal = new Font(pack, "fonts/mangal");
 
         endings = [];
 

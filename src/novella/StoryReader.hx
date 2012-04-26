@@ -121,15 +121,15 @@ class StoryReader extends Component
 
             var name = getActorName(_aggregator.actor);
             box.addChild(new Entity()
-                .add(new TextSprite(_ctx.georgia24, name).setXY(5, -20)));
+                .add(new TextSprite(_ctx.fontFixed, name).setXY(5, -20)));
 
             var padding = 10;
             var y = 20;
             var width = System.stage.width;
-            var lines = _ctx.georgia32.splitLines(text, System.stage.width - 2*padding);
+            var lines = _ctx.fontMangal.splitLines(text, System.stage.width - 2*padding);
             var seq = [];
             for (line in lines) {
-                var label = new TextSprite(_ctx.georgia32);
+                var label = new TextSprite(_ctx.fontMangal);
                 label.setXY(padding, y);
                 y += label.font.size;
                 seq.push(new TypeAction(line, 15, label));
@@ -146,7 +146,7 @@ class StoryReader extends Component
             sprite.alpha._ = 0.8;
             _modeLayer.addChild(box);
 
-            var heading = new TextSprite(_ctx.georgia32, heading);
+            var heading = new TextSprite(_ctx.fontMangal, heading);
             box.addChild(new Entity().add(heading));
 
             var y = 60.0;
@@ -174,7 +174,7 @@ class StoryReader extends Component
                 y += sprite.getNaturalHeight() + 10;
                 _modeLayer.addChild(box);
 
-                var label = new TextSprite(_ctx.georgia32, option.text);
+                var label = new TextSprite(_ctx.fontMangal, option.text);
                 label.setXY(sprite.getNaturalWidth()/2 - label.getNaturalWidth()/2,
                     sprite.getNaturalHeight()/2 - label.font.size/2);
                 box.addChild(new Entity().add(label));
