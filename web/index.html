@@ -53,14 +53,6 @@
     }
   </style>
   <script>
-    if (typeof _gaq != "object") {
-      var _gaq = [];
-      (function() {
-        var ga = document.createElement("script"); ga.type = "text/javascript"; ga.async = true;
-        ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
-        var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
-      })();
-    }
   </script>
 </head>
 <body>
@@ -68,13 +60,22 @@
 <script src="flambe.js"></script>
 <div id="content"></div>
 <script>
-  function analyticsCommand (command) {
-    _gaq.push(command);
+  if (typeof _gaq != "object") {
+    var _gaq = [];
+    (function() {
+      var ga = document.createElement("script"); ga.async = true;
+      ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
+      var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
+    })();
   }
   _gaq.push(
     ["novella._setAccount", "UA-9490853-8"],
-    ["novella._setCookiePath", location.href ],
+    ["novella._setCookiePath", location.href],
     ["novella._trackPageview"]);
+
+  function analyticsCommand (command) {
+    _gaq.push(command);
+  }
   flambe.embed("app", "content");
 </script>
 
