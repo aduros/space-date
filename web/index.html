@@ -57,8 +57,8 @@
 </head>
 <body>
 
-<script src="code/embed.js"></script>
 <div id="content"></div>
+<script src="flambe.js"></script>
 <script>
   if (typeof _gaq != "object") {
     var _gaq = [];
@@ -76,7 +76,7 @@
   function analyticsCommand (command) {
     _gaq.push(command);
   }
-  flambe.embed("code/default", "content");
+  flambe.embed("targets/main", "content");
 </script>
 
 <footer class="no-mobile">
