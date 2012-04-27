@@ -124,7 +124,7 @@ class StoryReader extends Component
                 .add(new TextSprite(_ctx.fontFixed, name).setXY(5, -20)));
 
             var padding = 10;
-            var y = 20;
+            var y = 5;
             var width = System.stage.width;
             var lines = _ctx.fontMangal.splitLines(text, System.stage.width - 2*padding);
             var seq = [];
