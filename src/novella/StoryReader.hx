@@ -208,13 +208,14 @@ class StoryReader extends Component
 
     private function createMusic (music :Music) :Sound
     {
-        switch (music) {
-        case Silence:
-            return null;
-        default:
-            var name = Type.enumConstructor(music);
-            return _ctx.pack.loadSound("music/" + name);
-        }
+        return null;
+        // switch (music) {
+        // case Silence:
+        //     return null;
+        // default:
+        //     var name = Type.enumConstructor(music);
+        //     return _ctx.pack.loadSound("music/" + name);
+        // }
     }
 
     private function getActorName (actor :Actor) :String
