@@ -16,14 +16,18 @@ class MainScene
             .add(new ImageSprite(ctx.pack.loadTexture("title.jpg")));
         scene.addChild(background);
 
-        background.get(Sprite).pointerDown.connect(function (_) {
-            System.root.get(Director).unwindToScene(StoryScene.create(ctx));
-        });
-
         var unlockedEndings = Math.min(ctx.endings.length, 4);
         scene.addChild(new Entity()
             .add(new ImageSprite(ctx.pack.loadTexture("endings" + unlockedEndings + ".png"))
                 .setXY(23, 434)));
+
+        var startButton = new Entity()
+            .add(new ImageSprite(ctx.pack.loadTexture("start.png"))
+                .setXY(209, 286));
+        startButton.get(Sprite).pointerDown.connect(function (_) {
+            System.root.get(Director).unwindToScene(StoryScene.create(ctx));
+        });
+        scene.addChild(startButton);
 
         return scene;
     }
