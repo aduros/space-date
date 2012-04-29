@@ -2,8 +2,6 @@ package novella;
 
 class Story
 {
-    public static var SOON = branch().with(MarkMigraine).saying("Whoa, hold on! This part isn't done yet.");
-
     public static var intro =
         branch()
             .at(Intro)
@@ -47,13 +45,11 @@ class Story
             .with(Dan).saying("I thought today was the 'big day'. What happened?")
         .then()
             .with(Mark).choice("What will Mark tell his friends?",
-                "Today is too busy, you haven't even talk to her yet", ending1,
-                "Today is the day, just had to finish a report first", ending2)
+                "Today is too busy, you haven't even talk to her yet", partA1,
+                "Today is the day, just had to finish a report first", partA2)
         ;
 
-    inline private static var partB = SOON;
-
-    inline private static var ending1 =
+    inline private static var partA1 =
         branch()
             .with(MarkMigraine).saying("Yeah, today was suppossed to be the day. The boss gave us a huge report though. I've been too busy with work to talk to her.")
         .then()
@@ -101,7 +97,7 @@ class Story
             .theEnd(1)
         ;
 
-    inline private static var ending2 =
+    inline private static var partA2 =
         branch()
             .with(Mark).saying("Nothing happened, I just had to get some work done first. The boss gave us some huge report to finish today.")
         .then()
@@ -166,6 +162,127 @@ class Story
             .with(Nobody).saying("This ends our time following Mark, the desk minion. Who would have guessed we would be so helpful? Thank you for spending your time at SpAAACe with us! We hope to see you... in the future!")
         .then()
             .theEnd(2)
+        ;
+
+    inline private static var partB =
+        branch()
+            .with(Mark).saying("I can hear the printer going, couldn't hurt to check and see if it's Sarah.")
+        .then()
+            .at(Printer)
+            .with(SarahAngry).saying("...")
+        .then()
+            .with(Mark).saying("Hey Sarah, everything okay?")
+        .then()
+            .with(SarahAngry).saying("Hey Mark, do you know how to fix this thing? Darn printer has eaten my report three times already.")
+        .then()
+            .with(Mark).saying("It just needs some extra effort to get to print correctly some times... Ah, there! All better.")
+        .then()
+            .with(SarahHappy).saying("Thank you! Finally, my report is done. How is yours coming along?")
+        .then()
+            .with(Mark).saying("Uh... It's not quite done yet. I was heading out for my lunch break when I heard you over here with the printer.")
+        .then()
+            .with(Sarah).saying("I won't keep you. Thanks for the help, Mark. Hope you get your report done in time.")
+        .then()
+            .with(Mark).saying("Thanks, see you after lunch.")
+        .then()
+            .with(Mark).saying("Well, that didn't go so well...I almost forgot, Dan wanted to meet me for lunch! If I hurry, I can make it.")
+        .then()
+            .at(Cafe).playing(Mandeville)
+            .with(Nobody).saying("The Cafe is alive with lunch time customers, a familar face is sitting in a booth alone.")
+        .then()
+            .with(Mark).saying("Hey Dan, your spacing out. I could have stolen your fries right out from under your nose. Are you okay?")
+        .then()
+            .with(Dan).saying("Huh? Oh! You finally made it. You sure took your time today.")
+        .then()
+            .with(Mark).saying("Yeah, sorry about that. We were giving this huge report to finish today.")
+        .then()
+            .with(DanWorried).saying("Ah... Lori found a boyfriend.")
+        .then()
+            .with(Mark).saying("What?! I thought you two were going out.")
+        .then()
+            .with(Dan).saying("Only unofficially. We're old friends, but I never said anything. I guess she got tired of hinting and me not doing anything...")
+        .then()
+            .choice("What will Mark tell his friends?",
+                "Yikes, I guess I should say something to Sarah today instead of later", partB1,
+                "I wasn't able to say anything to Sarah yet, so don't feel too bad", partB2)
+        ;
+
+    inline private static var partB1 =
+        branch()
+            .with(Dan).saying("What?! Come on, drag your heels any more and you'll be in the same situation as me. If you really like her as much as you say, tell her.")
+        .then()
+            .with(Mark).saying("I'll try and catch up to her at the office. Are you going to be okay?")
+        .then()
+            .with(Dan).saying("Do I look like I will?")
+        .then()
+            .with(Mark).saying("...")
+        .then()
+            .with(Mark).saying("Wait for me here after work, we'll go grab a drink.")
+        .then()
+            .with(Dan).saying("Okay, get back to work before your late. See you later.")
+        .then()
+            .at(Office).playing(Cipher)
+            .with(Mark).saying("Printing again, Sarah?")
+        .then()
+            .with(Sarah).saying("I need a second copy, aprently the fax machine also eats paper. How's your report coming along?")
+        .then()
+            .with(Mark).saying("Just getting back from lunch. I'll have it finished soon.")
+        .then()
+            .with(MarkHappy).saying("I was wondering, would you like to go out to a movie some time?")
+        .then()
+            .with(Sarah).saying("Maybe when you catch up on your work again.")
+        .then()
+            .with(Mark).saying("Speaking of work, I should get back to that. Heh. Nice talking to you again.")
+        .then()
+            .at(Office).playing(Silence) // TODO(bruno): playing(OnTheCoolSide)
+            .with(Mark).saying("After a few days of trying to catch up with my work, I heard Sarah had moved back to her previous building.")
+        .then()
+            .at(Cafe).playing(Silence)
+            .with(Mark).saying("Dan and I are back to being single and spending most of our time back at the old cafe.")
+        .then()
+            .with(Mark).saying("Lesson learned... if you love someone, let them know...")
+        .then()
+            .at(Intro)
+            .with(Nobody).saying("This ends our time following Mark, the desk minion. Not really the ending Mark had hoped for, but alteast he now has more time for his job. Thank you for spending your time at SpAAACe with us! We hope to see you... in the future!")
+            .theEnd(3)
+        ;
+
+    inline private static var partB2 =
+        branch()
+            .at(Cafe).playing(Mandeville)
+            .with(Dan).saying("Heh, we're not to good with this whole dating thing. Are we?")
+        .then()
+            .with(MarkHappy).saying("Here's to hoping we get better in the future.")
+        .then()
+            .with(Dan).saying("You should go finish your report. I'll be here when you get back.")
+        .then()
+            .with(Mark).saying("Yeah. Terra help us if I mess up dating and work on the same day.")
+        .then()
+            .at(Intro)
+            .with(Nobody).saying("There seems to be a gap in our records. One moment.")
+        .then()
+            .at(Cafe).playing(Silence) // TODO(bruno): playing(NightOnTheDocks)
+            .with(MarkCasual).saying("I ended up not talking to Sarah that day... That report was worse then I thought.")
+        .then()
+            .with(Dan).saying("How long till you found out?")
+        .then()
+            .with(MarkCasual).saying("I found out a few days later that she wasn't printing a report. She was printing a request to go back to her previous office.")
+        .then()
+            .with(Dan).saying("Ouch... no wonder you dissappeared for a week. I say we have a toast.")
+        .then()
+            .with(Mark).saying("With coffee?")
+        .then()
+            .with(Dan).saying("Yeah. A toast with coffee, to a bitter endings and hopefully a brighter future.")
+        .then()
+            .with(MarkHappy).saying("Heh, okay. To bitter endings and brighter futures. Cheers!")
+        .then()
+            .with(Dan).saying("I will say though... you were acting awefully strange that day. Almost as if someone else was helping you decide on things...")
+        .then()
+            .with(Mark).saying("Now that you mention it, I sort of got that feeling too...")
+        .then()
+            .at(Intro)
+            .with(Nobody).saying("Ahem! Err, yes. Well...This ends our time following Mark, the desk minion. Thank you for spending your time at SpAAACe with us! We hope to see you... in the future!")
+            .theEnd(4)
         ;
 
     public static function branch ()

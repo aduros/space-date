@@ -220,8 +220,8 @@ class StoryReader extends Component
     private function getActorName (actor :Actor) :String
     {
         return switch (actor) {
-            case Dan, DanHappy: "Dan";
-            case Lori: "Lori";
+            case Dan, DanHappy, DanUhh, DanWorried: "Dan";
+            case Lori, LoriHappy, LoriPout, LoriWorried: "Lori";
             case Mark, MarkHappy, MarkBashful, MarkMigraine,
                 MarkCasual, MarkCasualHappy, MarkCasualBashful, MarkCasualMigraine: "Mark";
             case Nobody: "";

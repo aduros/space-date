@@ -26,6 +26,11 @@ enum Actor
 
     Dan;
     DanHappy;
+    DanUhh;
+    DanWorried;
 
     Lori;
+    LoriHappy;
+    LoriPout;
+    LoriWorried;
 }
