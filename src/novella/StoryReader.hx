@@ -80,7 +80,7 @@ class StoryReader extends Component
             } else {
                 // Swap in the new actor
                 var sprite = createActor(screen.actor);
-                sprite.setXY(50, System.stage.height - sprite.getNaturalHeight());
+                sprite.setXY(50, NovellaConsts.HEIGHT - sprite.getNaturalHeight());
                 _actorEntity.add(sprite);
 
                 // And fade if there was nobody on screen previously
@@ -116,7 +116,7 @@ class StoryReader extends Component
             var box = new Entity()
                 .add(new ImageSprite(_ctx.pack.loadTexture("wordbox.png")));
             var sprite = box.get(Sprite);
-            sprite.y._ = System.stage.height - sprite.getNaturalHeight();
+            sprite.y._ = NovellaConsts.HEIGHT - sprite.getNaturalHeight();
             _modeLayer.addChild(box);
 
             var name = getActorName(_aggregator.actor);
@@ -126,7 +126,7 @@ class StoryReader extends Component
             var padding = 10;
             var y = 5;
             var width = System.stage.width;
-            var lines = _ctx.fontMangal.splitLines(text, System.stage.width - 2*padding);
+            var lines = _ctx.fontMangal.splitLines(text, NovellaConsts.WIDTH - 2*padding);
             var seq = [];
             for (line in lines) {
                 var label = new TextSprite(_ctx.fontMangal);
@@ -141,7 +141,7 @@ class StoryReader extends Component
 
         case Choice(heading, options):
             var box = new Entity()
-                .add(new FillSprite(0x000000, System.stage.width, 50));
+                .add(new FillSprite(0x000000, NovellaConsts.WIDTH, 50));
             var sprite = box.get(Sprite);
             sprite.alpha._ = 0.8;
             _modeLayer.addChild(box);
@@ -155,14 +155,14 @@ class StoryReader extends Component
 
             for (option in options) {
                 var box = new Entity()
-                    .add(new FillSprite(0x000000, System.stage.width - 40, 50));
+                    .add(new FillSprite(0x000000, NovellaConsts.WIDTH - 40, 50));
                 var sprite = box.get(Sprite);
                 sprite.alpha._ = 0.8;
 
                 if (animFromLeft) {
                     sprite.x.animate(-sprite.getNaturalWidth(), 20, animDuration);
                 } else {
-                    sprite.x.animate(System.stage.width, 20, animDuration);
+                    sprite.x.animate(NovellaConsts.WIDTH, 20, animDuration);
                 }
                 animFromLeft = !animFromLeft;
 
@@ -182,7 +182,7 @@ class StoryReader extends Component
 
         case Ending(ending):
             _ctx.unlockEnding(ending);
-            System.root.get(Director).unwindToScene(MainScene.create(_ctx));
+            _ctx.unwindToScene(MainScene.create(_ctx));
         }
         _aggregator.mode = screen.mode;
 

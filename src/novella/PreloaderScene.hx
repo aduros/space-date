@@ -5,28 +5,30 @@ import flambe.asset.Manifest;
 import flambe.display.FillSprite;
 import flambe.display.Sprite;
 import flambe.Entity;
-import flambe.scene.Director;
 import flambe.System;
 
 class PreloaderScene
 {
-    public static function create () :Entity
+    public static function create (ctx :NovellaCtx) :Entity
     {
         var scene = new Entity();
 
         var background = new Entity()
-            .add(new FillSprite(0x202020, System.stage.width, System.stage.height));
+            .add(new FillSprite(0x202020, NovellaConsts.WIDTH, NovellaConsts.HEIGHT));
         scene.addChild(background);
 
         var manifest = Manifest.build("bootstrap");
         var loader = System.loadAssetPack(manifest);
-        loader.get(onSuccess);
+        loader.get(function (pack :AssetPack) {
+            ctx.pack = pack;
+            ctx.unwindToScene(MainScene.create(ctx));
+        });
 
         var progressWidth = 500;
         var progressBar = new Entity()
             .add(new FillSprite(0x000000, progressWidth, 20)
                 .centerAnchor()
-                .setXY(System.stage.width/2, System.stage.height/2));
+                .setXY(NovellaConsts.WIDTH/2, NovellaConsts.HEIGHT/2));
         scene.addChild(progressBar);
 
         var barFill = new Entity().add(new FillSprite(0xffffff, 0, 20));
@@ -48,13 +50,5 @@ class PreloaderScene
         });
 
         return scene;
-    }
-
-    private static function onSuccess (pack :AssetPack)
-    {
-        var ctx = new NovellaCtx(pack);
-        var mainScene = MainScene.create(ctx);
-
-        System.root.get(Director).unwindToScene(mainScene);
     }
 }

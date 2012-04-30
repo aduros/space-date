@@ -3,7 +3,6 @@ package novella;
 import flambe.display.ImageSprite;
 import flambe.display.Sprite;
 import flambe.Entity;
-import flambe.scene.Director;
 import flambe.System;
 
 class MainScene
@@ -25,7 +24,7 @@ class MainScene
             .add(new ImageSprite(ctx.pack.loadTexture("start.png"))
                 .setXY(209, 286));
         startButton.get(Sprite).pointerDown.connect(function (_) {
-            System.root.get(Director).unwindToScene(StoryScene.create(ctx));
+            ctx.unwindToScene(StoryScene.create(ctx));
         });
         scene.addChild(startButton);
 
