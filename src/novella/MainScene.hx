@@ -19,6 +19,7 @@ class MainScene
         var planet = new Entity()
             .add(new ImageSprite(ctx.pack.loadTexture("planet.png")).centerAnchor())
             .add(new PlanetMotion());
+        planet.get(PlanetMotion).onUpdate(5000); // Start a few seconds in
         scene.addChild(planet);
 
         var logo = new Entity()
@@ -50,7 +51,7 @@ private class PlanetMotion extends flambe.Component
 {
     public function new ()
     {
-        _elapsed = 5000; // Start a few seconds in
+        _elapsed = 0;
     }
 
     override public function onUpdate (dt :Int)
