@@ -61,9 +61,9 @@ class Screen
         return this;
     }
 
-    public function theEnd (ending :Int)
+    public function theEnd (ending :Int, text :String)
     {
-        this.mode = Ending(ending);
+        this.mode = Ending(ending, text);
         return this;
     }
 }
@@ -80,7 +80,7 @@ enum ScreenMode
     Choice (choices :Array<Option>);
 
     // Reach an ending
-    Ending (ending :Int);
+    Ending (ending :Int, text :String);
 }
 
 class Option

@@ -7,4 +7,5 @@ enum Backdrop
     Intro;
     Office;
     Printer;
+    TheEnd;
 }

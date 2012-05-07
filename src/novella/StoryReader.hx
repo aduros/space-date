@@ -50,6 +50,8 @@ class StoryReader extends Component
                 if (_cursor.nextScreen != null) {
                     // Advance to the next screen
                     show(_cursor.nextScreen);
+                } else {
+                    _ctx.unwindToScene(MainScene.create(_ctx));
                 }
             default:
                 // Do nothing
@@ -179,9 +181,14 @@ class StoryReader extends Component
                 _modeLayer.addChild(box);
             }
 
-        case Ending(ending):
+        case Ending(ending, text):
             _ctx.unlockEnding(ending);
-            _ctx.unwindToScene(MainScene.create(_ctx));
+            var count = _ctx.endings.length;
+            var extra  = (count < 4) ?
+                "You have unlocked " + count + " out of 4 endings. Find them all for a bonus epilogue!" :
+                "You have unlocked all 4 endings!";
+            show(new Screen().at(TheEnd).with(Nobody).saying(text + ". " + extra));
+            return;
         }
         _aggregator.mode = screen.mode;
 

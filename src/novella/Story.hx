@@ -27,6 +27,8 @@ class Story
         .then()
              .with(MarkMigraine).saying("Maybe splash water on my face, or go talk with a co-worker for a bit.")
         .then()
+            .with(Mark).saying("Argh...")
+        .then()
             .choice(
                 "Wash face then finish report", partA,
                 "Go talk to Sarah for a bit", partB)
@@ -50,9 +52,11 @@ class Story
         .then()
             .with(Dan).saying("I thought today was the 'big day'. What happened?")
         .then()
+            .with(Mark).saying("Um...")
+        .then()
             .with(Mark).choice(
-                "Today is too busy, you haven't even talk to her yet", partA1,
-                "Today is the day, just had to finish a report first", partA2)
+                "Today is too busy", partA1,
+                "Today is the day", partA2)
         ;
 
     inline private static var partA1 =
@@ -105,7 +109,7 @@ class Story
             .at(Intro)
             .with(Nobody).saying("This ends our time following Mark, the desk minion. Thank you for spending your time at SpAAACe with us! We hope to see you... in the future!")
         .then()
-            .theEnd(1)
+            .theEnd(1, "Ending 1")
         ;
 
     inline private static var partA2 =
@@ -183,7 +187,7 @@ class Story
         .then()
             .with(Nobody).saying("Thank you for spending your time at SpAAACe with us! We hope to see you... in the future!")
         .then()
-            .theEnd(2)
+            .theEnd(2, "Ending 2")
         ;
 
     inline private static var partB =
@@ -224,9 +228,11 @@ class Story
         .then()
             .with(Dan).saying("Only unofficially. We're old friends, but I never said anything. I guess she got tired of hinting and me not doing anything...")
         .then()
+            .with(Mark).saying("Um...")
+        .then()
             .choice(
-                "I guess I should say something to Sarah today.", partB1,
-                "I wasn't able to say anything to Sarah yet.", partB2)
+                "Say something to Sarah today", partB1,
+                "Not able to say anything either", partB2)
         ;
 
     inline private static var partB1 =
@@ -270,7 +276,7 @@ class Story
         .then()
             .with(Nobody).saying("Thank you for spending your time at SpAAACe with us! We hope to see you... in the future!")
         .then()
-            .theEnd(3)
+            .theEnd(3, "Ending 3")
         ;
 
     inline private static var partB2 =
@@ -311,7 +317,7 @@ class Story
         .then()
             .with(Nobody).saying("Thank you for spending your time at SpAAACe with us! We hope to see you... in the future!")
         .then()
-            .theEnd(4)
+            .theEnd(4, "Ending 4")
         ;
 
     public static function branch ()
