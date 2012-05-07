@@ -1,5 +1,7 @@
 package novella;
 
+import novella.Transition;
+
 class Story
 {
     public static var intro =
@@ -11,6 +13,7 @@ class Story
         .then()
             .with(Nobody).saying("Since watching things happen is a bit boring, let's also help him choose what paths to take! We can because we CARE sooo much here at SpAAAce.")
         .then()
+            .transition(Fade(0x000000))
             .at(Office).playing(Cipher)
             .with(Mark).saying("Another nice day outside. Normally I'd be pretty upset about having to spend all morning indoors like this...")
         .then()
@@ -27,7 +30,7 @@ class Story
         .then()
              .with(MarkMigraine).saying("Maybe splash water on my face, or go talk with a co-worker for a bit.")
         .then()
-            .with(Mark).saying("Argh...")
+            .with(Mark).saying("What should I do?")
         .then()
             .choice(
                 "Wash face then finish report", partA,
@@ -83,10 +86,11 @@ class Story
         .then()
             .with(Mark).saying("Crazy thing. You'd think with all the advanced technology lately, we'd invent better printers. Let's see if we can get it to work...")
         .then()
-            .with(Sarah).saying("I think it's our punishment for not taking a field job. Hey, you got it to work, thank you Mark.")
+            .with(SarahHappy).saying("I think it's our punishment for not taking a field job. Hey, you got it to work, thank you Mark.")
         .then()
             .with(MarkBashful).saying("You're welcome... um.. Sarah? There's something I want to talk to you about, once we're both off the clock.")
         .then()
+            .transition(Fade(0xffffff))
             .at(Cafe).playing(AwesomeCall)
             .with(MarkCasualHappy).saying("It's been two weeks now! I no longer work as a paper pusher at SpAAAce!")
         .then()
@@ -129,7 +133,7 @@ class Story
             .with(MarkBashful).saying("I better run back now. Thanks guys.")
         .then()
             .at(Office).playing(Cipher)
-            .with(Nobody).saying("The office seems too quite, not even the growl of the printer can be heard.")
+            .with(Nobody).saying("The office seems too quiet, not even the growl of the printer can be heard.")
         .then()
             .with(Mark).saying("I guess I missed her... I should look over that report one more time...")
         .then()
@@ -151,16 +155,17 @@ class Story
         .then()
             .with(MarkHappy).saying("I- yeah! Yes, I, sure. Let me just print this and we can go! I've been trying to find and talk with you, so this works out great.")
         .then()
-            .with(SarahHappy).saying("Good! Hurry up, time waits for no one and I'm not going to miss the intro to the movie because your being slow.")
+            .with(SarahHappy).saying("Good! Hurry up, time waits for no one and I'm not going to miss the intro to the movie because you're being slow.")
         .then()
+            .transition(Fade(0xffffff))
             .at(Cafe).playing(AwesomeCall)
             .with(MarkCasualHappy).saying("I can't believe this. I'm no longer a paper pusher for SpAAAce, I've got my own office now, and I'm going to be married soon!")
         .then()
-            .with(DanWorried).saying("You might want to send me a email or something next time you decide to drop off the face of the moon like that. That goes for both of you!")
+            .with(DanWorried).saying("You might want to send me an email or something next time you decide to drop off the face of the moon like that. That goes for both of you!")
         .then()
             .with(SarahCasualHappy).saying("We're sorry, work and everything just happened so fast... seems like just yesterday we went to the movies and talked about how we both felt.")
         .then()
-            .with(LoriHappy).saying("Aww, you two are just so cute! It's always wonderful to see two people stepping towards the future together like that... Isn't it, Dan?")
+            .with(LoriHappy).saying("Aww, you two are just so cute! It's always wonderful to see two people stepping towards the future together like that... isn't it, Dan?")
         .then()
             .with(DanUhh).saying("Ah... Mark! So tell me, what have you two been up to the month you've both been gone?")
         .then()
@@ -237,7 +242,7 @@ class Story
 
     inline private static var partB1 =
         branch()
-            .with(DanWorried).saying("What?! Come on, drag your heels anymore and you'll be in the same situation as me. If you really like her as much as you say, tell her.")
+            .with(DanWorried).saying("What?! Come on, drag your heels any more and you'll be in the same situation as me. If you really like her as much as you say, tell her.")
         .then()
             .with(Mark).saying("I'll try and catch up to her at the office. Are you going to be okay?")
         .then()
@@ -247,7 +252,7 @@ class Story
         .then()
             .with(MarkHappy).saying("Wait for me here after work, we'll go grab a drink.")
         .then()
-            .with(Dan).saying("Okay, get back to work before your late. See you later.")
+            .with(Dan).saying("Okay, get back to work before you're late. See you later.")
         .then()
             .at(Office).playing(Cipher)
             .with(Mark).saying("Printing again, Sarah?")
@@ -262,10 +267,10 @@ class Story
         .then()
             .with(Mark).saying("Speaking of work, I should get back to that. Heh. Nice talking to you again.")
         .then()
-            .at(Office).playing(Silence) // TODO(bruno): playing(OnTheCoolSide)
+            .transition(Fade(0xffffff))
+            .at(Cafe).playing(Silence) // TODO(bruno): playing(OnTheCoolSide)
             .with(MarkCasual).saying("After a few days of trying to catch up with my work, I heard Sarah had moved back to her previous building.")
         .then()
-            .at(Cafe).playing(Silence)
             .with(MarkCasual).saying("Dan and I are back to being single and spending most of our time back at the old cafe.")
         .then()
             .with(MarkCasual).saying("Lesson learned... if you love someone, let them know...")
@@ -293,6 +298,7 @@ class Story
             .at(Intro)
             .with(Nobody).saying("There seems to be a gap in our records. One moment.")
         .then()
+            .transition(Fade(0xffffff))
             .at(Cafe).playing(Silence) // TODO(bruno): playing(NightOnTheDocks)
             .with(MarkCasual).saying("I ended up not talking to Sarah that day... That report was worse than I thought.")
         .then()

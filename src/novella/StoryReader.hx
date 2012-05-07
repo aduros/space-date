@@ -1,5 +1,6 @@
 package novella;
 
+import flambe.animation.Easing;
 import flambe.Component;
 import flambe.display.FillSprite;
 import flambe.display.ImageSprite;
@@ -9,6 +10,8 @@ import flambe.Disposer;
 import flambe.Entity;
 import flambe.input.PointerEvent;
 import flambe.scene.Director;
+import flambe.script.AnimateTo;
+import flambe.script.CallFunction;
 import flambe.script.Script;
 import flambe.script.Sequence;
 import flambe.sound.Playback;
@@ -16,6 +19,7 @@ import flambe.sound.Sound;
 import flambe.System;
 
 import novella.Screen;
+import novella.Transition;
 
 class StoryReader extends Component
 {
@@ -36,6 +40,9 @@ class StoryReader extends Component
 
         _disposer.add(_modeLayer = new Entity());
         owner.addChild(_modeLayer);
+
+        _disposer.add(_overlayLayer = new Entity());
+        owner.addChild(_overlayLayer);
 
         _aggregator = new Screen();
 
@@ -68,32 +75,48 @@ class StoryReader extends Component
 
     private function show (screen :Screen)
     {
-        if (screen.backdrop != null && screen.backdrop != _aggregator.backdrop) {
-            _backdropEntity.add(createBackdrop(screen.backdrop));
+        // Merge some of this screen's attributes into the aggregator
+        if (screen.backdrop != null) {
             _aggregator.backdrop = screen.backdrop;
         }
-
-        if (screen.actor != null && screen.actor != _aggregator.actor) {
-            var fadeDuration = 0.2;
-            if (screen.actor == Actor.Nobody && _actorEntity.has(Sprite)) {
-                // Simply fade out the current actor
-                _actorEntity.get(Sprite).alpha.animate(1, 0, fadeDuration);
-
-            } else {
-                // Swap in the new actor
-                var sprite = createActor(screen.actor);
-                sprite.setXY(50, NovellaConsts.HEIGHT - sprite.getNaturalHeight());
-                _actorEntity.add(sprite);
-
-                // And fade if there was nobody on screen previously
-                if (_aggregator.actor == Actor.Nobody) {
-                    sprite.alpha.animate(0, 1, fadeDuration);
-                }
-            }
+        if (screen.actor != null) {
             _aggregator.actor = screen.actor;
         }
 
-        if (screen.music != null && screen.music != _aggregator.music) {
+        _aggregator.mode = screen.mode;
+        _cursor = screen;
+
+        if (screen.transitionType == null) {
+            showAggregatedScreen();
+
+        } else switch (screen.transitionType) {
+        case Fade(color):
+            var overlay = new Entity()
+                .add(new FillSprite(color, NovellaConsts.WIDTH, NovellaConsts.HEIGHT))
+                .add(new Script());
+            var sprite = overlay.get(Sprite);
+            sprite.alpha._ = 0;
+            overlay.get(Script).run(new Sequence([
+                new AnimateTo(sprite.alpha, 1, 0.5, Easing.linear),
+                new CallFunction(showAggregatedScreen),
+                new AnimateTo(sprite.alpha, 0, 0.5, Easing.linear),
+                new CallFunction(overlay.dispose),
+            ]));
+            _overlayLayer.addChild(overlay);
+        }
+    }
+
+    public function showAggregatedScreen ()
+    {
+        _modeLayer.disposeChildren();
+
+        _backdropEntity.add(createBackdrop(_aggregator.backdrop));
+
+        var sprite = createActor(_aggregator.actor);
+        sprite.setXY(50, NovellaConsts.HEIGHT - sprite.getNaturalHeight());
+        _actorEntity.add(sprite);
+
+        if (_aggregator.music != null) {
             if (_music != null) {
                 _disposer.remove(_music);
                 _music.dispose();
@@ -101,16 +124,14 @@ class StoryReader extends Component
 
             // Play the new music, adding it to the _disposer so it will automatically stop when this
             // entity is disposed
-            var sound = createMusic(screen.music);
+            var sound = createMusic(_aggregator.music);
             if (sound != null) {
                 _music = sound.loop();
                 _disposer.add(_music);
             }
         }
 
-        _modeLayer.disposeChildren();
-
-        switch (screen.mode) {
+        switch (_aggregator.mode) {
         case Blank:
             // Nothing
 
@@ -187,12 +208,12 @@ class StoryReader extends Component
             var extra  = (count < 4) ?
                 "You have unlocked " + count + " out of 4 endings. Find them all for a bonus epilogue!" :
                 "You have unlocked all 4 endings!";
-            show(new Screen().at(TheEnd).with(Nobody).saying(text + ". " + extra));
+            show(new Screen()
+                .transition(Fade(0x000000))
+                .at(TheEnd)
+                .with(Nobody).saying(text + ". " + extra));
             return;
         }
-        _aggregator.mode = screen.mode;
-
-        _cursor = screen;
     }
 
     private function createActor (actor :Actor) :Sprite
@@ -249,5 +270,7 @@ class StoryReader extends Component
 
     private var _actorEntity :Entity;
     private var _backdropEntity :Entity;
+
     private var _modeLayer :Entity;
+    private var _overlayLayer :Entity;
 }

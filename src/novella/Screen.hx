@@ -4,8 +4,9 @@ class Screen
 {
     public var actor :Actor;
     public var backdrop :Backdrop;
-    public var music :Music;
     public var mode :ScreenMode;
+    public var music :Music;
+    public var transitionType :Transition;
 
     public var prevScreen :Screen;
     public var nextScreen :Screen;
@@ -13,6 +14,12 @@ class Screen
     public function new ()
     {
         mode = Blank;
+    }
+
+    public function transition (transitionType :Transition)
+    {
+        this.transitionType = transitionType;
+        return this;
     }
 
     public function at (backdrop :Backdrop)
