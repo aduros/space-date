@@ -25,9 +25,9 @@ class Story
             .at(Blocks).playing(Rising)
             .with(MarkMigraine).saying("I can't look at the screen anymore, my eyes are burning! I need a break or something.")
         .then()
-             .with(MarkMigraine).saying(" Maybe splash water on my face, or go talk with a co-worker for a bit.")
+             .with(MarkMigraine).saying("Maybe splash water on my face, or go talk with a co-worker for a bit.")
         .then()
-            .choice("Choose what Mark will do.",
+            .choice(
                 "Wash face then finish report", partA,
                 "Go talk to Sarah for a bit", partB)
         ;
@@ -50,11 +50,11 @@ class Story
         .then()
             .with(Dan).saying("I thought today was the 'big day'. What happened?")
         .then()
-            .with(Mark).choice("What will Mark tell his friends?",
+            .with(Mark).choice(
                 "Today is too busy, you haven't even talk to her yet", partA1,
                 "Today is the day, just had to finish a report first", partA2)
         ;
- 
+
     inline private static var partA1 =
         branch()
             .with(MarkMigraine).saying("Yeah, today was supposed to be the day. The boss gave us a huge report though. I've been too busy with work to talk to her.")
@@ -224,7 +224,7 @@ class Story
         .then()
             .with(Dan).saying("Only unofficially. We're old friends, but I never said anything. I guess she got tired of hinting and me not doing anything...")
         .then()
-            .choice("What will Mark tell his friends?",
+            .choice(
                 "I guess I should say something to Sarah today.", partB1,
                 "I wasn't able to say anything to Sarah yet.", partB2)
         ;

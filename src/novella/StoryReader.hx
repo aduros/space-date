@@ -139,45 +139,44 @@ class StoryReader extends Component
             script.run(new Sequence(seq));
             box.add(script);
 
-        case Choice(heading, options):
-            var box = new Entity()
-                .add(new FillSprite(0x000000, NovellaConsts.WIDTH, 50));
-            var sprite = box.get(Sprite);
-            sprite.alpha._ = 0.8;
-            _modeLayer.addChild(box);
-
-            var heading = new TextSprite(_ctx.fontMangal, heading);
-            box.addChild(new Entity().add(heading));
-
-            var y = 60.0;
+        case Choice(options):
+            var width = NovellaConsts.WIDTH - 40;
+            var height = 80;
+            var padding = 50;
+            var x = 20;
+            var y = NovellaConsts.HEIGHT/2 - (options.length*(height+padding) - padding)/2;
             var animFromLeft = true;
             var animDuration = 0.5;
 
             for (option in options) {
                 var box = new Entity()
-                    .add(new FillSprite(0x000000, NovellaConsts.WIDTH - 40, 50));
+                    .add(new Sprite());
                 var sprite = box.get(Sprite);
-                sprite.alpha._ = 0.8;
-
                 if (animFromLeft) {
-                    sprite.x.animate(-sprite.getNaturalWidth(), 20, animDuration);
+                    sprite.x.animate(-width, x, animDuration);
                 } else {
-                    sprite.x.animate(NovellaConsts.WIDTH, 20, animDuration);
+                    sprite.x.animate(NovellaConsts.WIDTH, x, animDuration);
                 }
+                sprite.y._ = y;
+                y += height + padding;
                 animFromLeft = !animFromLeft;
 
-                sprite.y._ = y;
+                var background = new Entity()
+                    .add(new FillSprite(0x000000, width, height));
+                var sprite = background.get(Sprite);
+                sprite.alpha._ = 0.8;
                 sprite.pointerDown.connect(function (event) {
                     show(option.branch);
                     _ignoreEvent = event; // Flag that this event shouldn't be handled above
                 });
-                y += sprite.getNaturalHeight() + 10;
-                _modeLayer.addChild(box);
+                box.addChild(background);
 
                 var label = new TextSprite(_ctx.fontMangal, option.text);
-                label.setXY(sprite.getNaturalWidth()/2 - label.getNaturalWidth()/2,
-                    sprite.getNaturalHeight()/2 - label.font.size/2);
+                label.setXY(width/2 - label.getNaturalWidth()/2,
+                    height/2 - label.getNaturalHeight()/2);
                 box.addChild(new Entity().add(label));
+
+                _modeLayer.addChild(box);
             }
 
         case Ending(ending):
