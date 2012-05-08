@@ -59,7 +59,7 @@ class Story
         .then()
             .with(Mark).choice(
                 "Today is too busy", partA1,
-                "Today is the day", partA2)
+                "Today is the day!", partA2)
         ;
 
     inline private static var partA1 =
@@ -76,8 +76,6 @@ class Story
         .then()
             .at(Office).playing(Cipher)
             .with(Nobody).saying("The Office hums with the sound of the printer and it's angry beeps of it wanting more paper.")
-        .then()
-            .with(Nobody).saying("After telling your computer to print your report, you head over to the printer as well.")
         .then()
             .at(Printer)
             .with(MarkHappy).saying("Hiya Sarah, is the printer fighting back again?")
@@ -96,7 +94,7 @@ class Story
         .then()
             .with(SarahCasualBashful).saying("I know it's been two weeks, why are you shouting it out like that?")
         .then()
-            .with(MarkCasualBashful).saying("I uh... felt like there was someone who waiting to still find out. You know, should and pretty much everyone near by hears you...")
+            .with(MarkCasualBashful).saying("I uh... felt like there was someone who waiting to still find out.")
         .then()
             .with(DanWorried).saying("Anyways, what have you two been up to? You basically left me hanging two weeks ago. Both of you up and vanished for a bit.")
         .then()
@@ -113,7 +111,7 @@ class Story
             .at(Intro)
             .with(Nobody).saying("This ends our time following Mark, the desk minion. Thank you for spending your time at SpAAACe with us! We hope to see you... in the future!")
         .then()
-            .theEnd(1, "Ending 1")
+            .theEnd(1, "A good ending")
         ;
 
     inline private static var partA2 =
@@ -192,7 +190,7 @@ class Story
         .then()
             .with(Nobody).saying("Thank you for spending your time at SpAAACe with us! We hope to see you... in the future!")
         .then()
-            .theEnd(2, "Ending 2")
+            .theEnd(2, "The best ending")
         ;
 
     inline private static var partB =
@@ -277,11 +275,12 @@ class Story
         .then()
             .at(Intro)
             .with(Nobody).saying("This ends our time following Mark, the desk minion.")
+        .then()
             .with(Nobody).saying("Not really the ending Mark had hoped for, but at least he now has more time for his job.")
         .then()
             .with(Nobody).saying("Thank you for spending your time at SpAAACe with us! We hope to see you... in the future!")
         .then()
-            .theEnd(3, "Ending 3")
+            .theEnd(3, "It could have gone better")
         ;
 
     inline private static var partB2 =
@@ -323,7 +322,7 @@ class Story
         .then()
             .with(Nobody).saying("Thank you for spending your time at SpAAACe with us! We hope to see you... in the future!")
         .then()
-            .theEnd(4, "Ending 4")
+            .theEnd(4, "If you don't say anything, we won't either")
         ;
 
     public static function branch ()
