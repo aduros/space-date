@@ -6,6 +6,7 @@ enum Backdrop
     Cafe;
     Epilogue;
     Intro;
+    Night;
     Office;
     Printer;
     TheEnd;
