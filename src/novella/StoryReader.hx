@@ -206,12 +206,10 @@ class StoryReader extends Component
             _ctx.unlockEnding(ending);
             var count = _ctx.endings.length;
             var showEpilogue = (count >= 4);
-            var extraText = showEpilogue ?
-                "You have unlocked " + count + " out of 4 endings. Find them all for a bonus epilogue!" :
-                "You have unlocked all 4 endings!";
+            var extraText = showEpilogue ? "You have unlocked all 4 endings!" :
+                "You have unlocked " + count + " out of 4 endings. Find them all for a bonus epilogue!";
             var screen = new Screen()
-                .transition(Fade(0x000000))
-                .at(TheEnd)
+                .transition(Fade(0x000000)).at(TheEnd)
                 .with(Nobody).saying(text + ". " + extraText);
             if (showEpilogue) {
                 screen.nextScreen = Story.epilogue.rewind();
