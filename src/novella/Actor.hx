@@ -9,7 +9,6 @@ enum Actor
     MarkCasual;
     MarkCasualBashful;
     MarkCasualHappy;
-    MarkCasualMigraine;
     MarkHappy;
     MarkMigraine;
 

@@ -251,7 +251,7 @@ class StoryReader extends Component
             case Dan, DanHappy, DanUhh, DanWorried: "Dan";
             case Lori, LoriHappy, LoriPout, LoriWorried: "Lori";
             case Mark, MarkHappy, MarkBashful, MarkMigraine,
-                MarkCasual, MarkCasualHappy, MarkCasualBashful, MarkCasualMigraine: "Mark";
+                MarkCasual, MarkCasualHappy, MarkCasualBashful: "Mark";
             case Nobody: "";
             case Sarah, SarahHappy, SarahBashful, SarahSad, SarahAngry,
                 SarahCasual, SarahCasualHappy, SarahCasualBashful, SarahCasualSad,
