@@ -39,9 +39,19 @@ class MainScene
             .add(new ImageSprite(ctx.pack.loadTexture("start.png"))
                 .setXY(209, 286));
         startButton.get(Sprite).pointerDown.connect(function (_) {
+            Metrics.trackEvent("Gameplay", "Start");
             ctx.unwindToScene(StoryScene.create(ctx));
         });
         scene.addChild(startButton);
+
+        var gamesButton = new Entity()
+            .add(new ImageSprite(ctx.pack.loadTexture("games.png"))
+                .setXY(243, 380));
+        gamesButton.get(Sprite).pointerDown.connect(function (_) {
+            Metrics.trackEvent("Gameplay", "More Games");
+            System.callNative("moreGames");
+        });
+        scene.addChild(gamesButton);
 
         return scene;
     }

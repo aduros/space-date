@@ -203,7 +203,9 @@ class StoryReader extends Component
             }
 
         case Ending(ending, text):
+            Metrics.trackEvent("Gameplay", "Ending", "#" + ending);
             _ctx.unlockEnding(ending);
+
             var count = _ctx.endings.length;
             var showEpilogue = (count >= 4);
             var extraText = showEpilogue ? "You have unlocked all 4 endings!" :
