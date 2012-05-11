@@ -4,12 +4,12 @@ import novella.Transition;
 
 class Story
 {
-    public static var intro =
+    public static var begin =
         branch()
             .at(Intro)
             .with(Nobody).saying("Welcome to SpAAAce! Our company provides the best care for your short range shuttle while you live on Terra Moon 1.")
         .then()
-            .with(Nobody).saying("We strive to show you just how much we care, so let's follow one of our hard working employees thought a tough time in their life!")
+            .with(Nobody).saying("We strive to show you just how much we care, so let's follow one of our hard working employees through a tough time in their life!")
         .then()
             .with(Nobody).saying("Since watching things happen is a bit boring, let's also help him choose what paths to take! We can because we CARE sooo much here at SpAAAce.")
         .then()
@@ -219,7 +219,7 @@ class Story
             .at(Cafe).playing(Mandeville)
             .with(Nobody).saying("The cafe is alive with lunch time customers, a familiar face is sitting in a booth alone.")
         .then()
-            .with(Mark).saying("Hey Dan, your spacing out. I could have stolen your fries right out from under your nose. Are you okay?")
+            .with(Mark).saying("Hey Dan, you're spacing out. I could have stolen your fries right out from under your nose. Are you okay?")
         .then()
             .with(Dan).saying("Huh? Oh! You finally made it. You sure took your time today.")
         .then()
@@ -324,6 +324,16 @@ class Story
         .then()
             .theEnd(4, "If you don't say anything, we won't either")
         ;
+
+    public static var epilogue =
+        branch()
+            .at(Intro)
+            .with(Nobody).saying("Welcome back to SpAAAce. You have one new message.")
+        .then()
+            .saying("\"Thank you for all that you have done. Also, thank you for the all expense paid vacation time for our honeymoon!\" -- Mark")
+        .then()
+            .transition(Fade(0xffffff))
+            .at(Epilogue);
 
     public static function branch ()
     {

@@ -4,6 +4,7 @@ enum Backdrop
 {
     Blocks;
     Cafe;
+    Epilogue;
     Intro;
     Office;
     Printer;

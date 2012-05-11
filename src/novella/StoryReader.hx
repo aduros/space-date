@@ -205,13 +205,18 @@ class StoryReader extends Component
         case Ending(ending, text):
             _ctx.unlockEnding(ending);
             var count = _ctx.endings.length;
-            var extra  = (count < 4) ?
+            var showEpilogue = (count >= 4);
+            var extraText = showEpilogue ?
                 "You have unlocked " + count + " out of 4 endings. Find them all for a bonus epilogue!" :
                 "You have unlocked all 4 endings!";
-            show(new Screen()
+            var screen = new Screen()
                 .transition(Fade(0x000000))
                 .at(TheEnd)
-                .with(Nobody).saying(text + ". " + extra));
+                .with(Nobody).saying(text + ". " + extraText);
+            if (showEpilogue) {
+                screen.nextScreen = Story.epilogue.rewind();
+            }
+            show(screen);
             return;
         }
     }
