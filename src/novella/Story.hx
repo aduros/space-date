@@ -4,65 +4,7 @@ import novella.Transition;
 
 class Story
 {
-    public static var begin =
-        branch()
-            .at(Intro)
-            .with(Nobody).saying("Welcome to SpAAAce! Our company provides the best care for your short range shuttle while you live on Terra Moon 1.")
-        .then()
-            .with(Nobody).saying("We strive to show you just how much we care, so let's follow one of our hard working employees through a tough time in their life!")
-        .then()
-            .with(Nobody).saying("Since watching things happen is a bit boring, let's also help him choose what paths to take! We can because we CARE sooo much here at SpAAAce.")
-        .then()
-            .transition(Fade(0x000000))
-            .at(Office).playing(Cipher)
-            .with(Mark).saying("Another nice day outside. Normally I'd be pretty upset about having to spend all morning indoors like this...")
-        .then()
-            .with(MarkHappy).saying("However, today Sarah is also in the office. I think I can bear it if she's here too.")
-        .then()
-            .with(MarkBashful).saying("I'm not going to lie... it was love at first sight for me. I haven't said anything yet though. Just small office chat here and there.")
-        .then()
-            .with(MarkHappy).saying("Today is the day though, I'm going to tell Sarah how I feel! Maybe. Right after I finish this report for the boss.")
-        .then()
-            .with(Nobody).saying("Several hours of work later...")
-        .then()
-            .at(Blocks).playing(Rising)
-            .with(MarkMigraine).saying("I can't look at the screen anymore, my eyes are burning! I need a break or something.")
-        .then()
-             .with(MarkMigraine).saying("Maybe splash water on my face, or go talk with a co-worker for a bit.")
-        .then()
-            .with(Mark).saying("What should I do?")
-        .then()
-            .choice(
-                "Wash face then finish report", partA,
-                "Go talk to Sarah for a bit", partB)
-        ;
-
-    // Inlined to prevent static initialization order problems
-    inline private static var partA =
-        branch()
-            .with(Mark).saying("After several hours of work, that darn report is finally done. It's time for lunch and it looks like Sarah has already went.")
-        .then()
-            .with(MarkHappy).saying("I almost forgot! Dan and Lori wanted to go out for lunch. I might be able to catch them still.")
-        .then()
-            .at(Cafe).playing(Mandeville)
-            .with(Nobody).saying("The cafe is alive with lunch time customers, a familiar voice comes from a nearby table.")
-        .then()
-            .with(DanHappy).saying("Mark, you're late as usual! Come over here and grab a bite to eat already!")
-        .then()
-            .with(LoriWorried).saying("Sheesh, you look terrible. Did you run here or something?")
-        .then()
-            .with(Mark).saying("I accidentally worked into my lunch hour. Pass me some of your fries, I won't be here all that long.")
-        .then()
-            .with(Dan).saying("I thought today was the 'big day'. What happened?")
-        .then()
-            .with(Mark).saying("Um...")
-        .then()
-            .with(Mark).choice(
-                "Today is too busy", partA1,
-                "Today is the day!", partA2)
-        ;
-
-    inline private static var partA1 =
+    private static var partA1 =
         branch()
             .with(MarkMigraine).saying("Yeah, today was supposed to be the day. The boss gave us a huge report though. I've been too busy with work to talk to her.")
         .then()
@@ -114,7 +56,7 @@ class Story
             .theEnd(1, "A good ending")
         ;
 
-    inline private static var partA2 =
+    private static var partA2 =
         branch()
             .with(Mark).saying("Nothing happened, I just had to get some work done first. The boss gave us some huge report to finish today.")
         .then()
@@ -193,52 +135,31 @@ class Story
             .theEnd(2, "The best ending")
         ;
 
-    inline private static var partB =
+    private static var partA =
         branch()
-            .with(Mark).saying("I can hear the printer going, couldn't hurt to check and see if it's Sarah.")
+            .with(Mark).saying("After several hours of work, that darn report is finally done. It's time for lunch and it looks like Sarah has already went.")
         .then()
-            .at(Printer)
-            .with(SarahAngry).saying("...")
-        .then()
-            .with(Mark).saying("Hey Sarah, everything okay?")
-        .then()
-            .with(SarahAngry).saying("Hey Mark, do you know how to fix this thing? Darn printer has eaten my report three times already.")
-        .then()
-            .with(Mark).saying("It just needs some extra effort to get to print correctly some times... Ah, there! All better.")
-        .then()
-            .with(SarahHappy).saying("Thank you! Finally, my report is done. How is yours coming along?")
-        .then()
-            .with(Mark).saying("Uh... It's not quite done yet. I was heading out for my lunch break when I heard you over here with the printer.")
-        .then()
-            .with(Sarah).saying("I won't keep you. Thanks for the help, Mark. Hope you get your report done in time.")
-        .then()
-            .with(Mark).saying("Thanks, see you after lunch.")
-        .then()
-            .with(Mark).saying("Well, that didn't go so well...I almost forgot, Dan wanted to meet me for lunch! If I hurry, I can make it.")
+            .with(MarkHappy).saying("I almost forgot! Dan and Lori wanted to go out for lunch. I might be able to catch them still.")
         .then()
             .at(Cafe).playing(Mandeville)
-            .with(Nobody).saying("The cafe is alive with lunch time customers, a familiar face is sitting in a booth alone.")
+            .with(Nobody).saying("The cafe is alive with lunch time customers, a familiar voice comes from a nearby table.")
         .then()
-            .with(Mark).saying("Hey Dan, you're spacing out. I could have stolen your fries right out from under your nose. Are you okay?")
+            .with(DanHappy).saying("Mark, you're late as usual! Come over here and grab a bite to eat already!")
         .then()
-            .with(Dan).saying("Huh? Oh! You finally made it. You sure took your time today.")
+            .with(LoriWorried).saying("Sheesh, you look terrible. Did you run here or something?")
         .then()
-            .with(Mark).saying("Yeah, sorry about that. We were giving this huge report to finish today.")
+            .with(Mark).saying("I accidentally worked into my lunch hour. Pass me some of your fries, I won't be here all that long.")
         .then()
-            .with(DanWorried).saying("Ah... Lori found a boyfriend.")
-        .then()
-            .with(Mark).saying("What?! I thought you two were going out.")
-        .then()
-            .with(Dan).saying("Not officially. We're old friends, but I never said anything. I guess she got tired of hinting and me not doing anything...")
+            .with(Dan).saying("I thought today was the 'big day'. What happened?")
         .then()
             .with(Mark).saying("Um...")
         .then()
-            .choice(
-                "Say something to Sarah today", partB1,
-                "Not able to say anything either", partB2)
+            .with(Mark).choice(
+                "Today is too busy", partA1,
+                "Today is the day!", partA2)
         ;
 
-    inline private static var partB1 =
+    private static var partB1 =
         branch()
             .with(DanWorried).saying("Come on, drag your heels any more and you'll be in the same situation as me. If you really like her as much as you say, tell her.")
         .then()
@@ -283,7 +204,7 @@ class Story
             .theEnd(3, "It could have gone better")
         ;
 
-    inline private static var partB2 =
+    private static var partB2 =
         branch()
             .at(Cafe).playing(Mandeville)
             .with(Dan).saying("Heh, we're not to good with this whole dating thing. Are we?")
@@ -323,6 +244,84 @@ class Story
             .with(Nobody).saying("Thank you for spending your time at SpAAACe with us! We hope to see you... in the future!")
         .then()
             .theEnd(4, "If you don't say anything, we won't either")
+        ;
+
+    private static var partB =
+        branch()
+            .with(Mark).saying("I can hear the printer going, couldn't hurt to check and see if it's Sarah.")
+        .then()
+            .at(Printer)
+            .with(SarahAngry).saying("...")
+        .then()
+            .with(Mark).saying("Hey Sarah, everything okay?")
+        .then()
+            .with(SarahAngry).saying("Hey Mark, do you know how to fix this thing? Darn printer has eaten my report three times already.")
+        .then()
+            .with(Mark).saying("It just needs some extra effort to get to print correctly some times... Ah, there! All better.")
+        .then()
+            .with(SarahHappy).saying("Thank you! Finally, my report is done. How is yours coming along?")
+        .then()
+            .with(Mark).saying("Uh... It's not quite done yet. I was heading out for my lunch break when I heard you over here with the printer.")
+        .then()
+            .with(Sarah).saying("I won't keep you. Thanks for the help, Mark. Hope you get your report done in time.")
+        .then()
+            .with(Mark).saying("Thanks, see you after lunch.")
+        .then()
+            .with(Mark).saying("Well, that didn't go so well...I almost forgot, Dan wanted to meet me for lunch! If I hurry, I can make it.")
+        .then()
+            .at(Cafe).playing(Mandeville)
+            .with(Nobody).saying("The cafe is alive with lunch time customers, a familiar face is sitting in a booth alone.")
+        .then()
+            .with(Mark).saying("Hey Dan, you're spacing out. I could have stolen your fries right out from under your nose. Are you okay?")
+        .then()
+            .with(Dan).saying("Huh? Oh! You finally made it. You sure took your time today.")
+        .then()
+            .with(Mark).saying("Yeah, sorry about that. We were giving this huge report to finish today.")
+        .then()
+            .with(DanWorried).saying("Ah... Lori found a boyfriend.")
+        .then()
+            .with(Mark).saying("What?! I thought you two were going out.")
+        .then()
+            .with(Dan).saying("Not officially. We're old friends, but I never said anything. I guess she got tired of hinting and me not doing anything...")
+        .then()
+            .with(Mark).saying("Um...")
+        .then()
+            .choice(
+                "Say something to Sarah today", partB1,
+                "Not able to say anything either", partB2)
+        ;
+
+    public static var begin =
+        branch()
+            .at(Intro)
+            .with(Nobody).saying("Welcome to SpAAAce! Our company provides the best care for your short range shuttle while you live on Terra Moon 1.")
+        .then()
+            .with(Nobody).saying("We strive to show you just how much we care, so let's follow one of our hard working employees through a tough time in their life!")
+        .then()
+            .with(Nobody).saying("Since watching things happen is a bit boring, let's also help him choose what paths to take! We can because we CARE sooo much here at SpAAAce.")
+        .then()
+            .transition(Fade(0x000000))
+            .at(Office).playing(Cipher)
+            .with(Mark).saying("Another nice day outside. Normally I'd be pretty upset about having to spend all morning indoors like this...")
+        .then()
+            .with(MarkHappy).saying("However, today Sarah is also in the office. I think I can bear it if she's here too.")
+        .then()
+            .with(MarkBashful).saying("I'm not going to lie... it was love at first sight for me. I haven't said anything yet though. Just small office chat here and there.")
+        .then()
+            .with(MarkHappy).saying("Today is the day though, I'm going to tell Sarah how I feel! Maybe. Right after I finish this report for the boss.")
+        .then()
+            .with(Nobody).saying("Several hours of work later...")
+        .then()
+            .at(Blocks).playing(Rising)
+            .with(MarkMigraine).saying("I can't look at the screen anymore, my eyes are burning! I need a break or something.")
+        .then()
+             .with(MarkMigraine).saying("Maybe splash water on my face, or go talk with a co-worker for a bit.")
+        .then()
+            .with(Mark).saying("What should I do?")
+        .then()
+            .choice(
+                "Wash face then finish report", partA,
+                "Go talk to Sarah for a bit", partB)
         ;
 
     public static var epilogue =
