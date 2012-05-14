@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+  <title>Space Date</title>
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="description" content="When the moon hits your eye, like a cute science-fi">
+  <meta property="og:title" content="Space Date">
+  <meta property="og:description" content="When the moon hits your eye, like a cute science-fi">
+  <meta property="og:type" content="game">
+  <meta property="og:image" content="http://aduros.com/space-date/media/114x114.png">
+  <meta property="og:url" content="https://aduros.com/space-date/">
+  <link rel="apple-touch-icon-precomposed" sizes="16x16" href="media/16x16.png">
+  <link rel="apple-touch-icon-precomposed" sizes="57x57" href="media/57x57.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="media/72x72.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="media/114x114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="media/144x144.png">
+  <link rel="shortcut icon" href="media/16x16.png">
+  <style>
+    body {
+      text-align: center;
+      margin: 0;
+      background: black;
+      color: #404040;
+      font-family: sans-serif;
+      font-size: 10pt;
+    }
+    a {
+      color: #F88113;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    html {
+      /* Prevent scrollbars from causing a resize feedback loop. */
+      overflow: hidden;
+    }
+    html, body {
+      height: 100%;
+    }
+    #content {
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+  <script>
+  </script>
+</head>
+<body>
+
+<div id="content"></div>
+<script src="flambe.js"></script>
+<script>
+  if (typeof _gaq != "object") {
+    var _gaq = [];
+    (function() {
+      var ga = document.createElement("script"); ga.async = true;
+      ga.src = ("https:" == document.location.protocol ? "https://ssl" : "http://www") + ".google-analytics.com/ga.js";
+      var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  }
+  _gaq.push(
+    ["novella._setAccount", "UA-9490853-8"],
+    ["novella._setCookiePath", location.href],
+    ["novella._trackPageview"]);
+
+  function analyticsCommand (command) {
+    _gaq.push(command);
+  }
+  function moreGames () {
+    window.top.location = "http://aduros.emufarmers.com/html5";
+  }
+  flambe.embed("targets/main", "content");
+</script>
+
+<footer class="no-mobile">
+<p>
+  <a href="?">Default</a> |
+  <a href="?flambe-platform=flash">Flash</a> |
+  <a href="?flambe-platform=html">HTML5</a>
+</p>
+</footer>
+
+</body>
+</html>
