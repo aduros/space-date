@@ -36,7 +36,7 @@ class Story
         .then()
             .with(SarahCasualBashful).saying("I know it's been two weeks, why are you shouting it out like that?")
         .then()
-            .with(MarkCasualBashful).saying("I uh... felt like there was someone who waiting to still find out.")
+            .with(MarkCasualBashful).saying("I uh... felt like there was someone who was waiting to still find out.")
         .then()
             .with(DanWorried).saying("Anyways, what have you two been up to? You basically left me hanging two weeks ago. Both of you up and vanished for a bit.")
         .then()
