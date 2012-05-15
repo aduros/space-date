@@ -19,12 +19,7 @@ def configure(ctx):
 def build(ctx):
     platforms = ["flash", "html"]
 
-    # Be relaxed and only require these platforms if you have the extra tools installed
-    # if ctx.env.has_android: platforms += ["android"]
-    # if ctx.env.has_ios: platforms += ["ios"]
-
     # Kick off a build with the desired platforms
     ctx(features="flambe",
         platforms=platforms,
-        airPassword="samplePassword",
         main="novella.NovellaMain")
