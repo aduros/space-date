@@ -1,7 +1,5 @@
 package novella;
 
-import haxe.Json;
-
 import flambe.asset.AssetPack;
 import flambe.display.Font;
 import flambe.Entity;
@@ -10,7 +8,7 @@ import flambe.System;
 
 using Lambda;
 
-private typedef NovellaConfig = {
+private typedef NovellaCookie = {
     endings :Array<Int>,
 }
 
@@ -31,11 +29,10 @@ class NovellaCtx
         _viewport = viewport;
 
         endings = [];
-        try {
-            var config :NovellaConfig = Json.parse(System.storage.get("config"));
-            endings = config.endings;
-        } catch (_ :Dynamic) {
-            // Swallow errors from corrupted save data
+
+        var cookie :NovellaCookie = System.storage.get("novella");
+        if (cookie != null) {
+            endings = cookie.endings;
         }
     }
 
@@ -54,10 +51,10 @@ class NovellaCtx
 
     private function saveConfig ()
     {
-        var config :NovellaConfig = {
+        var cookie :NovellaCookie = {
             endings: endings,
         };
-        System.storage.set("config", Json.stringify(config));
+        System.storage.set("novella", cookie);
     }
 
     private function setPack (pack :AssetPack) :AssetPack
