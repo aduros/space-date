@@ -23,7 +23,7 @@ import novella.Transition;
 
 class StoryReader extends Component
 {
-    public function new (ctx :NovellaCtx, story :Screen)
+    public function new (ctx :NovellaContext, story :Screen)
     {
         _ctx = ctx;
         _cursor = story.rewind();
@@ -264,7 +264,7 @@ class StoryReader extends Component
         }
     }
 
-    private var _ctx :NovellaCtx;
+    private var _ctx :NovellaContext;
     private var _disposer :Disposer;
     private var _ignoreEvent :PointerEvent;
 

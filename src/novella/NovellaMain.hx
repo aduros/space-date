@@ -23,7 +23,7 @@ class NovellaMain
         var viewport = new Entity().add(new Sprite());
         System.root.addChild(viewport);
 
-        var ctx = new NovellaCtx(viewport);
+        var ctx = new NovellaContext(viewport);
         ctx.unwindToScene(PreloaderScene.create(ctx));
 
         var borderN = new FillSprite(0x000000, 0, 0);

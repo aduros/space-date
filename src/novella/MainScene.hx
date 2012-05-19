@@ -8,7 +8,7 @@ import flambe.System;
 
 class MainScene
 {
-    public static function create (ctx :NovellaCtx) :Entity
+    public static function create (ctx :NovellaContext) :Entity
     {
         var scene = new Entity();
 

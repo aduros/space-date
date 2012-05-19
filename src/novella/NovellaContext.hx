@@ -12,7 +12,7 @@ private typedef NovellaCookie = {
     endings :Array<Int>,
 }
 
-class NovellaCtx
+class NovellaContext
 {
     public var pack (default, setPack) :AssetPack;
 
