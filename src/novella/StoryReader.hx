@@ -155,7 +155,7 @@ class StoryReader extends Component
                 var label = new TextSprite(_ctx.fontMangal);
                 label.setXY(padding, y);
                 y += label.font.size;
-                seq.push(new TypeAction(line, 15, label));
+                seq.push(new TypeAction(line, 15/1000, label));
                 box.addChild(new Entity().add(label));
             }
             var script = new Script();

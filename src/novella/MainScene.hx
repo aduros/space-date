@@ -64,16 +64,16 @@ private class PlanetMotion extends flambe.Component
         _elapsed = 0;
     }
 
-    override public function onUpdate (dt :Int)
+    override public function onUpdate (dt :Float)
     {
         _elapsed += dt;
 
-        var speed = 0.0001;
+        var speed = 0.1;
         var sprite = owner.get(Sprite);
         sprite.x._ = NovellaConsts.WIDTH/2 + 200*Math.sin(1.5*speed*_elapsed);
         sprite.y._ = 250 + 100*Math.sin(speed*_elapsed);
         sprite.scaleX._ = sprite.scaleY._ = 1 + 0.2*Math.sin(speed*_elapsed);
     }
 
-    private var _elapsed :Int;
+    private var _elapsed :Float;
 }

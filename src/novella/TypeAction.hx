@@ -11,16 +11,16 @@ using StringTools;
  */
 class TypeAction implements Action
 {
-    public function new (text :String, msPerChar :Int, ?spriteOverride :TextSprite)
+    public function new (text :String, timePerChar :Float, ?spriteOverride :TextSprite)
     {
         _text = text;
-        _msPerChar = msPerChar;
+        _timePerChar = timePerChar;
         _spriteOverride = spriteOverride;
 
         reset();
     }
 
-    public function update (dt :Int, actor :Entity) :Bool
+    public function update (dt :Float, actor :Entity) :Bool
     {
         var sprite = _spriteOverride;
         if (sprite == null) {
@@ -36,7 +36,7 @@ class TypeAction implements Action
                 return true;
             }
             sprite.text = _text.substr(0, _charIdx+1);
-            _delay = _msPerChar * charDelay(_text.fastCodeAt(_charIdx));
+            _delay = _timePerChar * charDelay(_text.fastCodeAt(_charIdx));
             ++_charIdx;
         }
 
@@ -61,9 +61,9 @@ class TypeAction implements Action
 
     private var _text :String;
     private var _spriteOverride :TextSprite;
-    private var _msPerChar :Int;
+    private var _timePerChar :Float;
 
-    private var _elapsed :Int;
-    private var _delay :Int;
+    private var _elapsed :Float;
+    private var _delay :Float;
     private var _charIdx :Int;
 }
