@@ -4,10 +4,10 @@ set -e
 
 # Build a fresh release build
 rm -rf deploy
-waf configure install
+wafl configure install
 
 # Deploy it
 rsync -avz --delete deploy/web/ catdap:web/space-date
 
 # Restore debug for development
-waf configure --debug
+wafl configure --debug
