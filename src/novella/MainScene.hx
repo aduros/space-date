@@ -1,6 +1,6 @@
 package novella;
 
-import flambe.animation.Easing;
+import flambe.animation.Ease;
 import flambe.display.ImageSprite;
 import flambe.display.Sprite;
 import flambe.Entity;
@@ -26,8 +26,8 @@ class MainScene
             .add(new ImageSprite(ctx.pack.loadTexture("logo.png"))
                 .centerAnchor().setXY(NovellaConsts.WIDTH/2, 150));
         var sprite = logo.get(Sprite);
-        sprite.scaleX.animate(0, 1, 0.8, Easing.backOut);
-        sprite.scaleY.animate(0, 1, 0.8, Easing.backOut);
+        sprite.scaleX.animate(0, 1, 0.8, Ease.backOut);
+        sprite.scaleY.animate(0, 1, 0.8, Ease.backOut);
         scene.addChild(logo);
 
         var unlockedEndings = Math.min(ctx.endings.length, 4);

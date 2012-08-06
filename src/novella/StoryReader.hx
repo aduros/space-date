@@ -1,6 +1,6 @@
 package novella;
 
-import flambe.animation.Easing;
+import flambe.animation.Ease;
 import flambe.Component;
 import flambe.display.FillSprite;
 import flambe.display.ImageSprite;
@@ -98,9 +98,9 @@ class StoryReader extends Component
             var sprite = overlay.get(Sprite);
             sprite.alpha._ = 0;
             overlay.get(Script).run(new Sequence([
-                new AnimateTo(sprite.alpha, 1, 0.5, Easing.linear),
+                new AnimateTo(sprite.alpha, 1, 0.5, Ease.linear),
                 new CallFunction(showAggregatedScreen),
-                new AnimateTo(sprite.alpha, 0, 0.5, Easing.linear),
+                new AnimateTo(sprite.alpha, 0, 0.5, Ease.linear),
                 new CallFunction(overlay.dispose),
             ]));
             _overlayLayer.addChild(overlay);
@@ -148,7 +148,7 @@ class StoryReader extends Component
                 .add(new TextSprite(_ctx.fontFixed, name).setXY(5, -20)));
 
             var padding = 10;
-            var y = 5;
+            var y = 5.0;
             var width = System.stage.width;
             var lines = _ctx.fontMangal.splitLines(text, NovellaConsts.WIDTH - 2*padding);
             var seq = [];
