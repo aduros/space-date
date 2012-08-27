@@ -46,13 +46,7 @@ class StoryReader extends Component
 
         _aggregator = new Screen();
 
-        _ignoreEventId = -1;
         _disposer.connect1(System.pointer.down, function (event) {
-            if (event.id == _ignoreEventId) {
-                return;
-            }
-            _ignoreEventId = -1;
-
             switch (_cursor.mode) {
             case Blank, Speech(_):
                 if (_cursor.nextScreen != null) {
@@ -190,8 +184,8 @@ class StoryReader extends Component
                 var sprite = background.get(Sprite);
                 sprite.alpha._ = 0.8;
                 sprite.pointerDown.connect(function (event) {
+                    event.stopPropagation();
                     show(option.branch);
-                    _ignoreEventId = event.id; // Flag that this event shouldn't be handled above
                 });
                 box.addChild(background);
 
@@ -267,7 +261,6 @@ class StoryReader extends Component
 
     private var _ctx :NovellaContext;
     private var _disposer :Disposer;
-    private var _ignoreEventId :Int;
 
     private var _cursor :Screen;
     private var _aggregator :Screen;
