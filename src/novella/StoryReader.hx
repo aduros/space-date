@@ -175,6 +175,7 @@ class StoryReader extends Component
                 } else {
                     sprite.x.animate(NovellaConsts.WIDTH, x, animDuration);
                 }
+                sprite.alpha.animate(0, 1, animDuration/2);
                 sprite.y._ = y;
                 y += height + padding;
                 animFromLeft = !animFromLeft;
