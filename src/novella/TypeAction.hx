@@ -20,7 +20,7 @@ class TypeAction implements Action
         reset();
     }
 
-    public function update (dt :Float, actor :Entity) :Bool
+    public function update (dt :Float, actor :Entity) :Float
     {
         var sprite = _spriteOverride;
         if (sprite == null) {
@@ -32,15 +32,16 @@ class TypeAction implements Action
             _elapsed -= _delay;
 
             if (_charIdx >= _text.length) {
+                var overtime = _elapsed;
                 reset();
-                return true;
+                return overtime;
             }
             sprite.text = _text.substr(0, _charIdx+1);
             _delay = _timePerChar * charDelay(_text.fastCodeAt(_charIdx));
             ++_charIdx;
         }
 
-        return false;
+        return -1;
     }
 
     public function reset ()
