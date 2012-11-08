@@ -4,23 +4,23 @@
 
 package novella;
 
-import flambe.animation.Ease;
 import flambe.Component;
+import flambe.Disposer;
+import flambe.Entity;
+import flambe.System;
+import flambe.animation.Ease;
 import flambe.display.FillSprite;
 import flambe.display.ImageSprite;
 import flambe.display.Sprite;
 import flambe.display.TextSprite;
-import flambe.Disposer;
-import flambe.Entity;
 import flambe.input.PointerEvent;
-import flambe.scene.Director;
+import flambe.scene.SlideTransition;
 import flambe.script.AnimateTo;
 import flambe.script.CallFunction;
 import flambe.script.Script;
 import flambe.script.Sequence;
 import flambe.sound.Playback;
 import flambe.sound.Sound;
-import flambe.System;
 
 import novella.Screen;
 import novella.Transition;
@@ -57,7 +57,7 @@ class StoryReader extends Component
                     // Advance to the next screen
                     show(_cursor.nextScreen);
                 } else {
-                    _ctx.unwindToScene(MainScene.create(_ctx));
+                    _ctx.unwindToScene(MainScene.create(_ctx), new SlideTransition(0.5).right());
                 }
             default:
                 // Do nothing

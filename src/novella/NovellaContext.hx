@@ -4,11 +4,12 @@
 
 package novella;
 
+import flambe.Entity;
+import flambe.System;
 import flambe.asset.AssetPack;
 import flambe.display.Font;
-import flambe.Entity;
 import flambe.scene.Director;
-import flambe.System;
+import flambe.scene.Transition;
 
 using Lambda;
 
@@ -48,9 +49,9 @@ class NovellaContext
         }
     }
 
-    public function unwindToScene (scene :Entity)
+    public function unwindToScene (scene :Entity, ?trans :Transition)
     {
-        _viewport.get(Director).unwindToScene(scene);
+        _viewport.get(Director).unwindToScene(scene, trans);
     }
 
     private function saveConfig ()

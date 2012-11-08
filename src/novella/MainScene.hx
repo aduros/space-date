@@ -7,6 +7,7 @@ package novella;
 import flambe.animation.Ease;
 import flambe.display.ImageSprite;
 import flambe.display.Sprite;
+import flambe.scene.SlideTransition;
 import flambe.Entity;
 import flambe.System;
 
@@ -44,7 +45,7 @@ class MainScene
                 .setXY(209, 286));
         startButton.get(Sprite).pointerDown.connect(function (_) {
             Metrics.trackEvent("Gameplay", "Start");
-            ctx.unwindToScene(StoryScene.create(ctx));
+            ctx.unwindToScene(StoryScene.create(ctx), new SlideTransition(0.5).left());
         });
         scene.addChild(startButton);
 

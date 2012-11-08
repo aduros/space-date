@@ -4,12 +4,13 @@
 
 package novella;
 
+import flambe.Entity;
+import flambe.System;
 import flambe.asset.AssetPack;
 import flambe.asset.Manifest;
 import flambe.display.FillSprite;
 import flambe.display.Sprite;
-import flambe.Entity;
-import flambe.System;
+import flambe.scene.FadeTransition;
 
 class PreloaderScene
 {
@@ -25,7 +26,7 @@ class PreloaderScene
         var loader = System.loadAssetPack(manifest);
         loader.get(function (pack :AssetPack) {
             ctx.pack = pack;
-            ctx.unwindToScene(MainScene.create(ctx));
+            ctx.unwindToScene(MainScene.create(ctx), new FadeTransition(0.5));
         });
 
         var progressWidth = 500;
