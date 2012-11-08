@@ -174,6 +174,10 @@ class StoryReader extends Component
                 var box = new Entity()
                     .add(new Sprite());
                 var sprite = box.get(Sprite);
+                sprite.pointerDown.connect(function (event) {
+                    event.stopPropagation();
+                    show(option.branch);
+                });
                 if (animFromLeft) {
                     sprite.x.animate(-width, x, animDuration);
                 } else {
@@ -188,10 +192,6 @@ class StoryReader extends Component
                     .add(new FillSprite(0x000000, width, height));
                 var sprite = background.get(Sprite);
                 sprite.alpha._ = 0.8;
-                sprite.pointerDown.connect(function (event) {
-                    event.stopPropagation();
-                    show(option.branch);
-                });
                 box.addChild(background);
 
                 var label = new TextSprite(_ctx.fontMangal, option.text);
