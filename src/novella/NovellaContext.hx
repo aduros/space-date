@@ -29,7 +29,7 @@ class NovellaContext
     public function new (viewport :Entity)
     {
         if (!viewport.has(Director)) {
-            viewport.add(new Director());
+            viewport.add(new Director().setSize(NovellaConsts.WIDTH, NovellaConsts.HEIGHT));
         }
         _viewport = viewport;
 
