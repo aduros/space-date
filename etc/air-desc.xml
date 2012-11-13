@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://ns.adobe.com/air/application/3.2">
+    <id>aduros.spacedate</id>
+    <versionNumber>1.0.0</versionNumber>
+    <filename>Space Date</filename>
+    <initialWindow>
+      <content>main-air.swf</content>
+      <renderMode>direct</renderMode>
+      <aspectRatio>landscape</aspectRatio>
+      <autoOrients>false</autoOrients>
+      <fullScreen>true</fullScreen>
+    </initialWindow>
+</application>

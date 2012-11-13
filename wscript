@@ -10,9 +10,10 @@ def configure(ctx):
 
 # Runs the build!
 def build(ctx):
-    platforms = ["flash", "html"]
+    platforms = ["flash", "html", "android"]
 
     # Kick off a build with the desired platforms
     ctx(features="flambe",
         platforms=platforms,
+        air_password="samplePassword",
         main="novella.NovellaMain")
