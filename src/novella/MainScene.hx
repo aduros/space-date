@@ -18,17 +18,17 @@ class MainScene
         var scene = new Entity();
 
         var background = new Entity()
-            .add(new ImageSprite(ctx.pack.loadTexture("title.jpg")));
+            .add(new ImageSprite(ctx.pack.getTexture("title")));
         scene.addChild(background);
 
         var planet = new Entity()
-            .add(new ImageSprite(ctx.pack.loadTexture("planet.png")).centerAnchor())
+            .add(new ImageSprite(ctx.pack.getTexture("planet")).centerAnchor())
             .add(new PlanetMotion());
         planet.get(PlanetMotion).onUpdate(5000); // Start a few seconds in
         scene.addChild(planet);
 
         var logo = new Entity()
-            .add(new ImageSprite(ctx.pack.loadTexture("logo.png"))
+            .add(new ImageSprite(ctx.pack.getTexture("logo"))
                 .centerAnchor().setXY(NovellaConsts.WIDTH/2, 150));
         var sprite = logo.get(Sprite);
         sprite.scaleX.animate(0, 1, 0.8, Ease.backOut);
@@ -37,11 +37,11 @@ class MainScene
 
         var unlockedEndings = Math.min(ctx.endings.length, 4);
         scene.addChild(new Entity()
-            .add(new ImageSprite(ctx.pack.loadTexture("endings" + unlockedEndings + ".png"))
+            .add(new ImageSprite(ctx.pack.getTexture("endings" + unlockedEndings))
                 .setXY(23, 434)));
 
         var startButton = new Entity()
-            .add(new ImageSprite(ctx.pack.loadTexture("start.png"))
+            .add(new ImageSprite(ctx.pack.getTexture("start"))
                 .setXY(209, 286));
         startButton.get(Sprite).pointerDown.connect(function (_) {
             Metrics.trackEvent("Gameplay", "Start");
@@ -50,7 +50,7 @@ class MainScene
         scene.addChild(startButton);
 
         var gamesButton = new Entity()
-            .add(new ImageSprite(ctx.pack.loadTexture("games.png"))
+            .add(new ImageSprite(ctx.pack.getTexture("games"))
                 .setXY(243, 380));
         gamesButton.get(Sprite).pointerDown.connect(function (_) {
             Metrics.trackEvent("Gameplay", "More Games");

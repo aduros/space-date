@@ -136,7 +136,7 @@ class StoryReader extends Component
 
         case Speech(text):
             var box = new Entity()
-                .add(new ImageSprite(_ctx.pack.loadTexture("wordbox.png")));
+                .add(new ImageSprite(_ctx.pack.getTexture("wordbox")));
             var sprite = box.get(Sprite);
             sprite.y._ = NovellaConsts.HEIGHT - sprite.getNaturalHeight();
             _modeLayer.addChild(box);
@@ -228,14 +228,14 @@ class StoryReader extends Component
             return new Sprite();
         default:
             var name = Type.enumConstructor(actor);
-            return new ImageSprite(_ctx.pack.loadTexture("actors/" + name + ".png"));
+            return new ImageSprite(_ctx.pack.getTexture("actors/" + name));
         }
     }
 
     private function createBackdrop (backdrop :Backdrop) :Sprite
     {
         var name = Type.enumConstructor(backdrop);
-        return new ImageSprite(_ctx.pack.loadTexture("backdrops/" + name + ".jpg"));
+        return new ImageSprite(_ctx.pack.getTexture("backdrops/" + name));
     }
 
     private function createMusic (music :Music) :Sound
@@ -246,7 +246,7 @@ class StoryReader extends Component
         //     return null;
         // default:
         //     var name = Type.enumConstructor(music);
-        //     return _ctx.pack.loadSound("music/" + name);
+        //     return _ctx.pack.getSound("music/" + name);
         // }
     }
 
