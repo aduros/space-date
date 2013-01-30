@@ -41,20 +41,24 @@ class MainScene
                 .setXY(23, 434)));
 
         var startButton = new Entity()
-            .add(new ImageSprite(ctx.pack.getTexture("start"))
-                .setXY(209, 286));
-        startButton.get(Sprite).pointerDown.connect(function (_) {
+            .add(new ImageSprite(ctx.pack.getTexture("start")).setXY(209, 286));
+        startButton.get(Sprite).pointerDown.connect(function (event) {
             Metrics.trackEvent("Gameplay", "Start");
             ctx.unwindToScene(StoryScene.create(ctx), new SlideTransition(0.5).left());
+
+            // Don't let StoryScene see this event
+            event.stopPropagation();
         });
         scene.addChild(startButton);
 
         var gamesButton = new Entity()
-            .add(new ImageSprite(ctx.pack.getTexture("games"))
-                .setXY(243, 380));
+            .add(new ImageSprite(ctx.pack.getTexture("games")).setXY(243, 380));
         gamesButton.get(Sprite).pointerDown.connect(function (_) {
             Metrics.trackEvent("Gameplay", "More Games");
-            System.callNative("moreGames");
+            try {
+                System.external.call("moreGames");
+            } catch (error :Dynamic) {
+            }
         });
         scene.addChild(gamesButton);
 
