@@ -22,7 +22,10 @@ class Metrics
     private static function call (command :Array<Dynamic>)
     {
 #if !debug
-        System.callNative("analyticsCommand", [ command ]);
+        try {
+            System.external.call("analyticsCommand", [ command ]);
+        } catch (error :Dynamic) {
+        }
 #end
     }
 
