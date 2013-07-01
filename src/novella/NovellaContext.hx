@@ -19,7 +19,7 @@ private typedef NovellaCookie = {
 
 class NovellaContext
 {
-    public var pack (default, setPack) :AssetPack;
+    public var pack (default, set) :AssetPack;
 
     public var fontFixed (default, null) :Font;
     public var fontMangal (default, null) :Font;
@@ -62,7 +62,7 @@ class NovellaContext
         System.storage.set("novella", cookie);
     }
 
-    private function setPack (pack :AssetPack) :AssetPack
+    private function set_pack (pack :AssetPack) :AssetPack
     {
         this.pack = pack;
         fontFixed = new Font(pack, "fonts/fixedsys");
