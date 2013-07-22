@@ -1,3 +1,6 @@
-.lock-waf*
-build
-deploy
+/build/
+
+.*.swp
+._*
+.DS_Store
+RECOVER_*
