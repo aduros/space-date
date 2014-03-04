@@ -22,7 +22,7 @@ class PreloaderScene
             .add(new FillSprite(0x202020, NovellaConsts.WIDTH, NovellaConsts.HEIGHT));
         scene.addChild(background);
 
-        var manifest = Manifest.build("bootstrap");
+        var manifest = Manifest.fromAssets("bootstrap");
         var loader = System.loadAssetPack(manifest);
         loader.get(function (pack :AssetPack) {
             ctx.pack = pack;
